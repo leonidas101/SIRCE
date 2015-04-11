@@ -1,0 +1,44 @@
+﻿@model STPS.SIRCE.Web.Models.TableroControlModel
+@{
+    ViewBag.Title = "Tablero de Control";
+    Layout = null;
+}
+
+<div id="contenido" class="col-lg-12">
+    <div id="gridListas" titulo="Listas presentadas por el Establecimiento:" icono="table" class="col-lg-12"></div>
+    <div id="datosListas" titulo="Datos de la Lista:" icono="search-plus" class="col-lg-12"></div>
+</div>
+<div id="constanciasRegion"></div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        //Modelo en Cache para llamadas posteriores a Servidor.
+        var model = @Html.Raw(Json.Encode(Model));
+
+        $($("#contenido").children("div")).dynamicPanels({});
+        consultarListas();
+    });
+
+    function consultarListas(callback){
+        $.ajax({
+            url: '@Url.Action("ConsultarListas", "TableroControl")',
+            type: 'GET',
+            data: null,
+            beforeSend: function() {
+                //Show Dynamic Loader
+                $("body").dynamicSpinner({
+                    loadingText: "Cargando Listas"
+                });
+            },
+            success: function (result) {
+                //Remover Dynamic Loader
+                $("body").dynamicSpinnerDestroy({});
+                $("#constanciasRegion").html('');
+                $("#gridListas .panel-body").html(result);
+                $(".modal-backdrop").remove();
+                if(callback != null && callback != undefined)
+                callback();
+            }
+        });
+    }
+</script>

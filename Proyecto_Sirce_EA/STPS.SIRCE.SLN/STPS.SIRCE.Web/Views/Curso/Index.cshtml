@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "Cursos";
+    Layout = null;
+}
+
+<div id="contenido" class="col-lg-12">
+    <div id="gridCursos" titulo="Cursos" icono="table" class="col-lg-12"></div>
+    <div id="datosCurso" titulo="Datos del curso" icono="search-plus " class="col-lg-12"></div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $($("#contenido").children("div")).dynamicPanels({});
+        consultarCursos();
+    });
+
+    function consultarCursos() {
+        $.ajax({
+            url: '@Url.Action("Grid")',
+            type: 'GET',
+            data: null,
+            beforeSend: function () {
+                $("body").dynamicSpinner({
+                    loadingText: "Cargando Cursos..."
+                });
+            },
+            success: function (result) {
+                $("#gridCursos .panel-body").html(result);
+                $("body").dynamicSpinnerDestroy({});
+            }
+        });
+    }
+</script>

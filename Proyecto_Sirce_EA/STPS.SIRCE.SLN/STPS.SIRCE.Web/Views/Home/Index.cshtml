@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "Login";
+}
+
+<div class="col-lg-12 text-center">
+    <img class="img-responsive" src="~/Image/STPS_logo_2012.png" />
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("body").dynamicSpinner({
+            loadingText: "Validando Usuario Activex"
+        });
+        var url = '/Empresa/Index';
+        setUser('Christopher Ibarra');
+        window.setTimeout(function () { window.location.href = url }, 2000);
+    });
+</script>

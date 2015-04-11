@@ -1,0 +1,56 @@
+﻿@model STPS.SIRCE.Web.Models.TrabajadorModel
+@{
+    ViewBag.Title = "Grid";
+    Layout = null;
+}
+
+<div class="col-lg-12 fix-Grid">
+    <div class="col-lg-12" id="gridTrab"></div>
+</div>
+
+<script type="text/javascript">
+    //Modelo en Cache para llamadas posteriores a Servidor.
+    var model = @Html.Raw(Json.Encode(Model));
+
+    $(document).ready(function () {
+        console.log(model);
+        // el nombre del control debe ser diferente al nombre del grid del modelo
+        $("#gridTrab").dynamicTable({
+            data: model.gridTrabajadores
+        });
+    });
+
+    // Función para ejecutar una acción desde el grid.
+    function accionarClick(boton){
+        debugger;
+        model.accion =  $(boton).attr('Accion');
+        if($(".active").attr('value')!=undefined)
+            model.trabajadorID = $(".active").attr("value")
+        $.ajax({
+            url: '@Url.Action("ConsultarDatosView", "Trabajador")',
+            type: 'POST',
+            data: {rawModel: JSON.stringify(model)},
+            //Mostrar Dynamic Loader
+            beforeSend: function() {
+                $("body").dynamicSpinner({
+                    loadingText: "Cargando Datos del Trabajador..."
+                });
+            },
+            success: function (result) {
+                //Remover Dynamic Loader
+                $("body").dynamicSpinnerDestroy({});
+                $("#datosTrabajador .panel-body").html(result);
+                $("#datosTrabajadorTitulo a").click();
+            }
+        });
+    }
+
+    function limpiarModelo()
+    {
+        model.gridTrabajadores = null;
+        model.listaTrabajadores = null;
+    }
+
+
+
+</script>

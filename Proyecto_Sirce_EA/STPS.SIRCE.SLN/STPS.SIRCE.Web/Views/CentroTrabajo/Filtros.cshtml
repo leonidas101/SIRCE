@@ -1,0 +1,270 @@
+﻿@model STPS.SIRCE.Web.Models.CentroTrabajoModel
+@{
+    ViewBag.Title = "Filtros";
+    Layout = null;
+}
+
+<form id="filtrosBusqueda">
+    <fieldset>
+        <legend>Campos de Busqueda para Centro de Trabajo:</legend>
+        <div class="col-lg-4 form-group">
+            <label for="Entidad"><span class="badge pull-left">1</span>&nbsp; Entidad Federativa:</label>
+            <select data-placeholder="-Seleccionar Entidad-" class="validate[required,funcCall[checkSelect]]  form-control" id="Entidad" />
+        </div>
+        <div id="formMunicipios" class="col-lg-4 form-group">
+            <label for="Municipio"><span class="badge pull-left">2</span>&nbsp; Delegacion/Municipio:</label>
+            <select data-placeholder="-Seleccionar Delegacion/Municipio-" class="validate[required,funcCall[checkSelect]] form-control" id="Municipio" />
+        </div>
+        <div class="col-lg-4 form-group">
+            <label for="ConsultarCentros">&nbsp;</label>
+            <button id="ConsultarCentros" type="button" class="btn btn-primary">Buscar Centros de Trabajo</button>
+        </div>
+    </fieldset>
+    <div id="alertFilter" class="col-lg-12 form-group">
+        <div class="alert alert-warning" role="alert">
+            <i class="fa fa-warning"></i> &nbsp; ¡No se encontraron centros de trabajo para los filtros seleccionados!.
+        </div>
+    </div>
+</form>
+
+<form id="filtrosCentroTrabajo" style="display:none;">
+    <fieldset>
+        <legend>Centros de Trabajo Encontrados:</legend>
+        <div class="col-lg-4 form-group">
+            <label for="CentrosTrabajo"><span class="badge pull-left">1</span>&nbsp; Entidad Federativa:</label>
+            <select data-placeholder="-Seleccionar Centro de Trabajo-" class="validate[required,funcCall[checkSelect]]  form-control" id="CentrosTrabajo" />
+        </div>
+        <div class="col-lg-4 form-group"></div>
+        <div class="col-lg-4 form-group">
+            <label for="SeleccionarCentro">&nbsp;</label>
+            <button id="SeleccionarCentro" type="button" class="btn btn-primary">Seleccionar Centro de Trabajo</button>
+        </div>
+        <div class="col-lg-12"><label id="labelCentroTrabajo" class="label label-info pull-right hidden" style="position:relative; z-index:1000000000;"></label></div>
+</fieldset>
+</form>
+
+<form id="datosCentroTrabajo" style="display:none;">
+    <fieldset>
+        <legend>Detalle de Centro de Trabajo Seleccionado:</legend>
+        <div class="col-lg-4 form-group">
+            <label for="centroTrabajoNombre">Nombre o Razón Social:</label>
+            <label id="centroTrabajoNombre"></label>
+        </div>
+        <div class="col-lg-4 form-group">
+            <label for="rfc">RFC:</label>
+            <label id="rfc"></label>
+        </div>
+        <div class="col-lg-4 form-group">
+            <label for="registroIMSS">Registro Patronal del IMSS:</label>
+            <label id="registroIMSS"></label>
+        </div>
+        <div class="col-lg-4 form-group">
+            <label for="curp">CURP:</label>
+            <label id="curp"></label>
+        </div>
+        <div class="col-lg-4 form-group">
+            <label for="colonia">Colonia:</label>
+            <label id="colonia"></label>
+        </div>
+        <div class="col-lg-4 form-group">
+            <label for="codigoPostal">Código Postal:</label>
+            <label id="codigoPostal"></label>
+        </div>
+        <div class="col-lg-4 form-group">
+            <label for="entidadDescripcion">Entidad Federativa:</label>
+            <label id="entidadDescripcion"></label>
+        </div>
+        <div class="col-lg-4 form-group">
+            <label for="municipioDescripcion">Municipio o Delegación:</label>
+            <label id="municipioDescripcion"></label>
+        </div>
+        <div class="col-lg-4 form-group">
+            <label for="telefono">Teléfono:</label>
+            <label id="telefono"></label>
+        </div>
+        <div class="col-lg-4 form-group">
+            <label for="fax">Fax:</label>
+            <label id="fax"></label>
+        </div>
+        <div class="col-lg-4 form-group">
+            <label for="correoElectronico">Correo Electrónico:</label>
+            <label id="correoElectronico"></label>
+        </div>
+        <div class="col-lg-4 form-group">
+            <label for="actividadEconomica">Actividad Económica:</label>
+            <label id="actividadEconomica"></label>
+        </div>
+        <div class="col-lg-4 form-group">
+            <label for="tipoContrato">Tipo de Contrato:</label>
+            <label id="tipoContrato"></label>
+        </div>
+    </fieldset>
+</form>
+
+
+    <script type="text/javascript">
+        //Modelo en Cache para llamadas posteriores a Servidor.
+        var model = @Html.Raw(Json.Encode(Model));
+        $(document).ready(function () {
+            //Fix Temporal Dynamic DropDown
+            $("#filtrosEstablecimientos .panel-body").height(($(".body-content").height()) * (2.3));
+            $("#filtrosEstablecimientosTitulo a").click(function( event ) {
+                event.stopPropagation();
+            });
+            $("#alertFilter").hide();
+            //Se Carga Dynamic DropDown Para Entidades
+            $("#Entidad").dynamicDropDown({
+                data: model.entidades
+            });
+            //Wipe de Entidades
+            model.entidades = null;
+            //Se habilita evento para cargar Municipios al Seleccionar una Entidad
+            $("#Entidad").chosen().change(function (event) {
+                if($("#Municipio_chosen").length)
+                    $("#Municipio").dynamicDropDownDestroy({});
+                if ($("#Entidad").val() != 0) {
+                    model.entidadID = $("#Entidad").val();
+                    $.ajax({
+                        url: '@Url.Action("ConsultarMunicipios")',
+                        type: 'POST',
+                        data: {rawModel: JSON.stringify(model)},
+                        //Mostrar Dynamic Loader
+                        beforeSend: function() {
+                            $("body").dynamicSpinner({
+                                loadingText: "Cargando Municipios"
+                            });
+                        },
+                        success: function (myModel) {
+                            //Remover Dynamic Loader
+                            $("body").dynamicSpinnerDestroy({});
+                            model = myModel;
+                            $("#Municipio").dynamicDropDown({
+                                data: model.municipios
+                            });
+                            $("#Municipio").chosen().change(function (event) {
+                                $("#filtrosCentroTrabajo").hide();
+                                $("#datosCentroTrabajo").hide();
+                            });
+                        }
+                    });
+                }
+                else{
+                    $("#filtrosCentroTrabajo").hide();
+                    $("#datosCentroTrabajo").hide();
+                }
+            });
+
+            $("#ConsultarCentros").click(function(){
+                if($("#filtrosBusqueda").validationEngine('validate',{validateNonVisibleFields: true, promptPosition : "bottomRight"})){
+                    //Wipe de Municipios
+                    model.municipios = null;
+                    model.entidadID = $("#Entidad").val();
+                    model.municipioID = $("#Municipio").val();
+                    model.entidadDescripcion = $('#Entidad :selected').text();
+                    model.municipioDescripcion = $('#Municipio :selected').text();
+                    $.ajax({
+                        url: '@Url.Action("ConsultarCentrosTrabajo")',
+                        type: 'POST',
+                        data: {rawModel: JSON.stringify(model)},
+                        dataType: 'json',
+                        //Mostrar Dynamic Loader
+                        beforeSend: function() {
+                            $("body").dynamicSpinner({
+                                loadingText: "Cargando Centros de Trabajo..."
+                            });
+                        },
+                        success: function (myModel) {
+                            //Remover Dynamic Loader
+                            $("body").dynamicSpinnerDestroy({});
+                            model = myModel;
+                            console.log(model);
+                            if(myModel.centrosTrabajoEmpresa.length>0){
+                                $("#CentrosTrabajo").dynamicDropDown({
+                                    data: myModel.centrosTrabajoEmpresa,
+                                    id: "centroTrabajoID",
+                                    desc: "centroTrabajoNombre"
+                                });
+                                $("#alertFilter").hide();
+                                $("#filtrosCentroTrabajo").show();
+                                $("#CentrosTrabajo").chosen().change(function (event) {
+                                    if ($("#CentrosTrabajo").val() != 0) {
+                                        debugger;
+                                        var selected = jQuery.grep(model.centrosTrabajoEmpresa, function(obj) {
+                                            return obj.centroTrabajoID == $("#CentrosTrabajo").val();
+                                        });
+                                        model.centroTrabajo = selected[0];
+                                        //Se fija las descripciones del Elemento Selccionado
+                                        $("#centroTrabajoNombre").text(selected[0].centroTrabajoNombre);
+                                        $("#rfc").text(selected[0].rfc);
+                                        $("#registroIMSS").text(selected[0].registroIMSS);
+                                        $("#curp").text(selected[0].curp);
+                                        $("#calleNumero").text(selected[0].calleNumero);
+                                        $("#colonia").text(selected[0].colonia);
+                                        $("#codigoPostal").text(selected[0].codigoPostal);
+                                        $("#entidadDescripcion").text(selected[0].entidadDescripcion);
+                                        $("#municipioDescripcion").text(selected[0].municipioDescripcion);
+                                        $("#telefono").text(selected[0].telefono);
+                                        $("#fax").text(selected[0].fax);
+                                        $("#correoElectronico").text(selected[0].correoElectronico);
+                                        $("#actividadEconomica").text(selected[0].actividadEconomica);
+                                        $("#tipoContrato").text(selected[0].tipoContrato);
+                                        $("#datosCentroTrabajo").show();
+                                    }
+                                    else{
+                                        $("#datosCentroTrabajo").hide();
+                                    }
+                                });
+                            }
+                            else{
+                                $("#filtrosCentroTrabajo").hide();
+                                $("#alertFilter").show();
+                            }
+                        }
+                    });
+                }
+            });
+
+            $("#SeleccionarCentro").click(function(){
+                if($("#filtrosCentroTrabajo").validationEngine('validate',{validateNonVisibleFields: true, promptPosition : "bottomRight"})){
+                    $.ajax({
+                        url: '@Url.Action("SeleccionCentroTrabajo")',
+                        type: 'POST',
+                        data: {rawModel: JSON.stringify(model)},
+                        beforeSend: function() {
+                            $("body").dynamicSpinner({
+                                loadingText: "Cargando Listas..."
+                            });
+                        },
+                        success: function (result) {
+                            //Remover Dynamic Loader
+                            $("body").dynamicSpinnerDestroy({});
+                            $("#SeleccionarCentro").text('Cargando..');
+                            $("#SeleccionarCentro").attr('disabled', 'disabled');
+                            $("#labelCentroTrabajo").text($('#CentrosTrabajo :selected').text());
+                            $("#labelCentroTrabajo").removeClass('hidden');
+                            $("#labelCentroTrabajo").animate({'top':'-510', 'left':'65', 'fontSize' : '15px'},
+                            {easing: 'swing',
+                                duration: 1900,
+                                complete: function(){
+                                    $("#labelCentroTrabajo").addClass('hidden');
+                                    $("#userBadge").text('3');
+                                    $("#liCentroTrabajo a").text($('#CentrosTrabajo :selected').text());
+                                    $("#liCentroTrabajo a").append("<i class='fa fa-reply'></i>");
+                                    $("#liCentroTrabajo").removeClass('hidden');
+                                }
+                            });
+                            enableMenu();
+                            window.setTimeout(function () {$(".body-content").html(result)}, 1900);
+                        }
+                    });
+                }
+            });
+        });
+
+        function checkSelect(field, rules, i, options){
+            if (field.val() == "0" || field.val() == "" || field.val() == undefined) {
+                // this allows the use of i18 for the error msgs
+                return options.allrules.validate2fields.alertText;
+            }
+        }
+    </script>

@@ -1,0 +1,42 @@
+﻿@model STPS.SIRCE.Web.Models.CargaMasivaModel
+@{
+    ViewBag.Title = "Grid";
+    Layout = null;
+}
+
+<div class="col-lg-12 fix-Grid">
+    <div class="col-lg-12 fix-Grid" id="gridTotalHtml"></div>
+</div>
+<div class="col-lg-12 fix-Grid">
+    <div class="col-lg-12 fix-Grid" id="gridOkHtml"></div>
+</div>
+<div class="col-lg-12 fix-Grid">
+    <div class="col-lg-12 fix-Grid" id="gridErrorHtml"></div>
+</div>
+<script type="text/javascript">
+    //Modelo en Cache para llamadas posteriores a Servidor.
+    var model = @Html.Raw(Json.Encode(Model));
+
+    $(document).ready(function () {
+        console.log(model);
+        //debugger;
+        $("#gridTotalHtml").dynamicTable({
+            data: model.gridTotales
+        });
+
+        $("#gridOkHtml").dynamicTable({
+            data: model.gridConstanciasValidas
+        });
+
+        $("#gridErrorHtml").dynamicTable({
+            data: model.gridConstanciasError
+        });
+    });
+
+    // Función para ejecutar una acción desde el grid.
+    function accionarClick(Accion){
+
+        console.log(model);
+    }
+
+</script>

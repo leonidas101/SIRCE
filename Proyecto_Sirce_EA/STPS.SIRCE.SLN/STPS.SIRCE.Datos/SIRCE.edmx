@@ -1,0 +1,1280 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SIRCEModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Acciones">
+          <Key>
+            <PropertyRef Name="AccionID" />
+          </Key>
+          <Property Name="AccionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AccionDescripcion" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Acuses">
+          <Key>
+            <PropertyRef Name="AcuseID" />
+          </Key>
+          <Property Name="AcuseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ListaID" Type="int" Nullable="false" />
+          <Property Name="FolioDC4" Type="nvarchar" MaxLength="12" Nullable="false" />
+          <Property Name="RFC" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="RazonSocial" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Direccion" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="AutenticidadAcuse" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="AreasTematicas">
+          <Key>
+            <PropertyRef Name="AreaTematicaID" />
+          </Key>
+          <Property Name="AreaTematicaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Clave" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="80" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CentrosTrabajoSIRCE">
+          <Key>
+            <PropertyRef Name="CentroTrabajoSIRCEID" />
+          </Key>
+          <Property Name="CentroTrabajoSIRCEID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CentroTrabajoID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ConsecutivosUR">
+          <Key>
+            <PropertyRef Name="ConsecutivoURID" />
+          </Key>
+          <Property Name="ConsecutivoURID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UnidadResponsableID" Type="int" Nullable="false" />
+          <Property Name="ConsecutivoDC4" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Constancias">
+          <Key>
+            <PropertyRef Name="ConstanciaID" />
+          </Key>
+          <Property Name="ConstanciaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ListaCentroTrabajoID" Type="int" Nullable="false" />
+          <Property Name="CursoID" Type="int" Nullable="false" />
+          <Property Name="TrabajadorID" Type="int" Nullable="false" />
+          <Property Name="Eliminado" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cursos">
+          <Key>
+            <PropertyRef Name="CursoID" />
+          </Key>
+          <Property Name="CursoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Duracion" Type="tinyint" Nullable="false" />
+          <Property Name="AreaTematicaID" Type="int" Nullable="false" />
+          <Property Name="FechaInicio" Type="datetime" Nullable="false" />
+          <Property Name="FechaTermino" Type="datetime" Nullable="false" />
+          <Property Name="TipoAgenteCapacitadorID" Type="tinyint" Nullable="false" />
+          <Property Name="RegistroAgenteExterno" Type="nvarchar" MaxLength="18" />
+          <Property Name="ModalidadCapacitacionID" Type="tinyint" Nullable="false" />
+          <Property Name="ObjetivoCapacitacionID" Type="int" Nullable="false" />
+          <Property Name="EmpresaSIRCEID" Type="int" Nullable="false" />
+          <Property Name="Eliminado" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DocumentosProbatorios">
+          <Key>
+            <PropertyRef Name="DocumentoProbatorioID" />
+          </Key>
+          <Property Name="DocumentoProbatorioID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EmpresaCentrosTrabajoSIRCE">
+          <Key>
+            <PropertyRef Name="EmpresaCentroTrabajoSIRCEID" />
+          </Key>
+          <Property Name="EmpresaCentroTrabajoSIRCEID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CentroTrabajoSIRCEID" Type="int" Nullable="false" />
+          <Property Name="EmpresaSIRCEID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EmpresasSIRCE">
+          <Key>
+            <PropertyRef Name="EmpresaSIRCEID" />
+          </Key>
+          <Property Name="EmpresaSIRCEID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmpresaID" Type="int" Nullable="false" />
+          <Property Name="ConsecutivoLista" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Escolaridades">
+          <Key>
+            <PropertyRef Name="EscolaridadID" />
+          </Key>
+          <Property Name="EscolaridadID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ListaCentrosTrabajo">
+          <Key>
+            <PropertyRef Name="ListaCentroTrabajoID" />
+          </Key>
+          <Property Name="ListaCentroTrabajoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ListaID" Type="int" Nullable="false" />
+          <Property Name="CentroTrabajoSIRCEID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Listas">
+          <Key>
+            <PropertyRef Name="ListaID" />
+          </Key>
+          <Property Name="ListaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="FolioEmpresa" Type="int" />
+          <Property Name="FechaPresentacion" Type="datetime" Nullable="false" />
+          <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+          <Property Name="NumeroConstancias" Type="int" Nullable="false" />
+          <Property Name="NombreRepresentante" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Hombres" Type="tinyint" />
+          <Property Name="Mujeres" Type="tinyint" />
+          <Property Name="CentroTrabajoSIRCEID" Type="int" Nullable="false" />
+          <Property Name="Origen" Type="tinyint" Nullable="false" />
+          <Property Name="UsuarioCreacion" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="UnidadResponsableID" Type="int" Nullable="false" />
+          <Property Name="UsuarioEnvio" Type="nvarchar" MaxLength="100" />
+          <Property Name="FechaEnvio" Type="datetime" />
+          <Property Name="Estatus" Type="tinyint" Nullable="false" />
+          <Property Name="Eliminado" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NormasCompetencia">
+          <Key>
+            <PropertyRef Name="NormaCompetenciaID" />
+          </Key>
+          <Property Name="NormaCompetenciaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Clave" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="300" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NormaTrabajador">
+          <Key>
+            <PropertyRef Name="NormaTrabajadorID" />
+          </Key>
+          <Property Name="NormaTrabajadorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TrabajadorID" Type="int" Nullable="false" />
+          <Property Name="NormaCompetenciaID" Type="int" Nullable="false" />
+          <Property Name="FechaEmision" Type="datetime" Nullable="false" />
+          <Property Name="Eliminado" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ObjetivosCapacitacion">
+          <Key>
+            <PropertyRef Name="ObjetivoCapacitacionID" />
+          </Key>
+          <Property Name="ObjetivoCapacitacionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="70" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ocupaciones">
+          <Key>
+            <PropertyRef Name="OcupacionID" />
+          </Key>
+          <Property Name="OcupacionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Clave" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Trabajadores">
+          <Key>
+            <PropertyRef Name="TrabajadorID" />
+          </Key>
+          <Property Name="TrabajadorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CURP" Type="nvarchar" MaxLength="18" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ApellidoPaterno" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ApellidoMaterno" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="OcupacionID" Type="int" Nullable="false" />
+          <Property Name="EntidadFederativaID" Type="int" Nullable="false" />
+          <Property Name="MunicipioID" Type="int" Nullable="false" />
+          <Property Name="EscolaridadID" Type="int" />
+          <Property Name="InstitucionesEducativasID" Type="int" />
+          <Property Name="ComprobanteEstudioID" Type="int" />
+          <Property Name="CentroTrabajoSIRCEID" Type="int" Nullable="false" />
+          <Property Name="Genero" Type="tinyint" Nullable="false" />
+          <Property Name="FechaNacimiento" Type="datetime" Nullable="false" />
+          <Property Name="FechaCreacion" Type="datetime" />
+          <Property Name="Eliminado" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Acuses_Listas">
+          <End Role="Listas" Type="Self.Listas" Multiplicity="1" />
+          <End Role="Acuses" Type="Self.Acuses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Listas">
+              <PropertyRef Name="ListaID" />
+            </Principal>
+            <Dependent Role="Acuses">
+              <PropertyRef Name="ListaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Constancias_Cursos">
+          <End Role="Cursos" Type="Self.Cursos" Multiplicity="1" />
+          <End Role="Constancias" Type="Self.Constancias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cursos">
+              <PropertyRef Name="CursoID" />
+            </Principal>
+            <Dependent Role="Constancias">
+              <PropertyRef Name="CursoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Constancias_ListaCentrosTrabajo">
+          <End Role="ListaCentrosTrabajo" Type="Self.ListaCentrosTrabajo" Multiplicity="1" />
+          <End Role="Constancias" Type="Self.Constancias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ListaCentrosTrabajo">
+              <PropertyRef Name="ListaCentroTrabajoID" />
+            </Principal>
+            <Dependent Role="Constancias">
+              <PropertyRef Name="ListaCentroTrabajoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Constancias_Trabajadores">
+          <End Role="Trabajadores" Type="Self.Trabajadores" Multiplicity="1" />
+          <End Role="Constancias" Type="Self.Constancias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trabajadores">
+              <PropertyRef Name="TrabajadorID" />
+            </Principal>
+            <Dependent Role="Constancias">
+              <PropertyRef Name="TrabajadorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cursos_AreasTematicas">
+          <End Role="AreasTematicas" Type="Self.AreasTematicas" Multiplicity="1" />
+          <End Role="Cursos" Type="Self.Cursos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AreasTematicas">
+              <PropertyRef Name="AreaTematicaID" />
+            </Principal>
+            <Dependent Role="Cursos">
+              <PropertyRef Name="AreaTematicaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cursos_EmpresasSIRCE">
+          <End Role="EmpresasSIRCE" Type="Self.EmpresasSIRCE" Multiplicity="1" />
+          <End Role="Cursos" Type="Self.Cursos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmpresasSIRCE">
+              <PropertyRef Name="EmpresaSIRCEID" />
+            </Principal>
+            <Dependent Role="Cursos">
+              <PropertyRef Name="EmpresaSIRCEID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cursos_ObjetivosCapacitacion">
+          <End Role="ObjetivosCapacitacion" Type="Self.ObjetivosCapacitacion" Multiplicity="1" />
+          <End Role="Cursos" Type="Self.Cursos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ObjetivosCapacitacion">
+              <PropertyRef Name="ObjetivoCapacitacionID" />
+            </Principal>
+            <Dependent Role="Cursos">
+              <PropertyRef Name="ObjetivoCapacitacionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpresaCentrosTrabajoSIRCE_CentrosTrabajoSIRCE">
+          <End Role="CentrosTrabajoSIRCE" Type="Self.CentrosTrabajoSIRCE" Multiplicity="1" />
+          <End Role="EmpresaCentrosTrabajoSIRCE" Type="Self.EmpresaCentrosTrabajoSIRCE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CentrosTrabajoSIRCE">
+              <PropertyRef Name="CentroTrabajoSIRCEID" />
+            </Principal>
+            <Dependent Role="EmpresaCentrosTrabajoSIRCE">
+              <PropertyRef Name="CentroTrabajoSIRCEID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpresaCentrosTrabajoSIRCE_EmpresasSIRCE">
+          <End Role="EmpresasSIRCE" Type="Self.EmpresasSIRCE" Multiplicity="1" />
+          <End Role="EmpresaCentrosTrabajoSIRCE" Type="Self.EmpresaCentrosTrabajoSIRCE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmpresasSIRCE">
+              <PropertyRef Name="EmpresaSIRCEID" />
+            </Principal>
+            <Dependent Role="EmpresaCentrosTrabajoSIRCE">
+              <PropertyRef Name="EmpresaSIRCEID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ListaCentrosTrabajo_CentrosTrabajoSIRCE">
+          <End Role="CentrosTrabajoSIRCE" Type="Self.CentrosTrabajoSIRCE" Multiplicity="1" />
+          <End Role="ListaCentrosTrabajo" Type="Self.ListaCentrosTrabajo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CentrosTrabajoSIRCE">
+              <PropertyRef Name="CentroTrabajoSIRCEID" />
+            </Principal>
+            <Dependent Role="ListaCentrosTrabajo">
+              <PropertyRef Name="CentroTrabajoSIRCEID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ListaCentrosTrabajo_Listas">
+          <End Role="Listas" Type="Self.Listas" Multiplicity="1" />
+          <End Role="ListaCentrosTrabajo" Type="Self.ListaCentrosTrabajo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Listas">
+              <PropertyRef Name="ListaID" />
+            </Principal>
+            <Dependent Role="ListaCentrosTrabajo">
+              <PropertyRef Name="ListaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Listas_CentrosTrabajoSIRCE">
+          <End Role="CentrosTrabajoSIRCE" Type="Self.CentrosTrabajoSIRCE" Multiplicity="1" />
+          <End Role="Listas" Type="Self.Listas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CentrosTrabajoSIRCE">
+              <PropertyRef Name="CentroTrabajoSIRCEID" />
+            </Principal>
+            <Dependent Role="Listas">
+              <PropertyRef Name="CentroTrabajoSIRCEID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NormaTrabajador_NormasCompetencia">
+          <End Role="NormasCompetencia" Type="Self.NormasCompetencia" Multiplicity="1" />
+          <End Role="NormaTrabajador" Type="Self.NormaTrabajador" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NormasCompetencia">
+              <PropertyRef Name="NormaCompetenciaID" />
+            </Principal>
+            <Dependent Role="NormaTrabajador">
+              <PropertyRef Name="NormaCompetenciaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NormaTrabajador_Trabajadores">
+          <End Role="Trabajadores" Type="Self.Trabajadores" Multiplicity="1" />
+          <End Role="NormaTrabajador" Type="Self.NormaTrabajador" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trabajadores">
+              <PropertyRef Name="TrabajadorID" />
+            </Principal>
+            <Dependent Role="NormaTrabajador">
+              <PropertyRef Name="TrabajadorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trabajadores_CentrosTrabajoSIRCE">
+          <End Role="CentrosTrabajoSIRCE" Type="Self.CentrosTrabajoSIRCE" Multiplicity="1" />
+          <End Role="Trabajadores" Type="Self.Trabajadores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CentrosTrabajoSIRCE">
+              <PropertyRef Name="CentroTrabajoSIRCEID" />
+            </Principal>
+            <Dependent Role="Trabajadores">
+              <PropertyRef Name="CentroTrabajoSIRCEID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trabajadores_ComprobantesEstudio">
+          <End Role="DocumentosProbatorios" Type="Self.DocumentosProbatorios" Multiplicity="0..1" />
+          <End Role="Trabajadores" Type="Self.Trabajadores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DocumentosProbatorios">
+              <PropertyRef Name="DocumentoProbatorioID" />
+            </Principal>
+            <Dependent Role="Trabajadores">
+              <PropertyRef Name="ComprobanteEstudioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trabajadores_Escolaridades">
+          <End Role="Escolaridades" Type="Self.Escolaridades" Multiplicity="0..1" />
+          <End Role="Trabajadores" Type="Self.Trabajadores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Escolaridades">
+              <PropertyRef Name="EscolaridadID" />
+            </Principal>
+            <Dependent Role="Trabajadores">
+              <PropertyRef Name="EscolaridadID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trabajadores_Ocupaciones">
+          <End Role="Ocupaciones" Type="Self.Ocupaciones" Multiplicity="1" />
+          <End Role="Trabajadores" Type="Self.Trabajadores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ocupaciones">
+              <PropertyRef Name="OcupacionID" />
+            </Principal>
+            <Dependent Role="Trabajadores">
+              <PropertyRef Name="OcupacionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="spGetConsecutivos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EmpresaSIRCEID" Type="int" Mode="In" />
+          <Parameter Name="ConsecutivoURID" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="SIRCEModelStoreContainer">
+          <EntitySet Name="Acciones" EntityType="Self.Acciones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Acuses" EntityType="Self.Acuses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AreasTematicas" EntityType="Self.AreasTematicas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CentrosTrabajoSIRCE" EntityType="Self.CentrosTrabajoSIRCE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ConsecutivosUR" EntityType="Self.ConsecutivosUR" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Constancias" EntityType="Self.Constancias" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cursos" EntityType="Self.Cursos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DocumentosProbatorios" EntityType="Self.DocumentosProbatorios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmpresaCentrosTrabajoSIRCE" EntityType="Self.EmpresaCentrosTrabajoSIRCE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmpresasSIRCE" EntityType="Self.EmpresasSIRCE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Escolaridades" EntityType="Self.Escolaridades" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ListaCentrosTrabajo" EntityType="Self.ListaCentrosTrabajo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Listas" EntityType="Self.Listas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NormasCompetencia" EntityType="Self.NormasCompetencia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NormaTrabajador" EntityType="Self.NormaTrabajador" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ObjetivosCapacitacion" EntityType="Self.ObjetivosCapacitacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ocupaciones" EntityType="Self.Ocupaciones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Trabajadores" EntityType="Self.Trabajadores" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Acuses_Listas" Association="Self.FK_Acuses_Listas">
+            <End Role="Listas" EntitySet="Listas" />
+            <End Role="Acuses" EntitySet="Acuses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Constancias_Cursos" Association="Self.FK_Constancias_Cursos">
+            <End Role="Cursos" EntitySet="Cursos" />
+            <End Role="Constancias" EntitySet="Constancias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Constancias_ListaCentrosTrabajo" Association="Self.FK_Constancias_ListaCentrosTrabajo">
+            <End Role="ListaCentrosTrabajo" EntitySet="ListaCentrosTrabajo" />
+            <End Role="Constancias" EntitySet="Constancias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Constancias_Trabajadores" Association="Self.FK_Constancias_Trabajadores">
+            <End Role="Trabajadores" EntitySet="Trabajadores" />
+            <End Role="Constancias" EntitySet="Constancias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cursos_AreasTematicas" Association="Self.FK_Cursos_AreasTematicas">
+            <End Role="AreasTematicas" EntitySet="AreasTematicas" />
+            <End Role="Cursos" EntitySet="Cursos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cursos_EmpresasSIRCE" Association="Self.FK_Cursos_EmpresasSIRCE">
+            <End Role="EmpresasSIRCE" EntitySet="EmpresasSIRCE" />
+            <End Role="Cursos" EntitySet="Cursos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cursos_ObjetivosCapacitacion" Association="Self.FK_Cursos_ObjetivosCapacitacion">
+            <End Role="ObjetivosCapacitacion" EntitySet="ObjetivosCapacitacion" />
+            <End Role="Cursos" EntitySet="Cursos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpresaCentrosTrabajoSIRCE_CentrosTrabajoSIRCE" Association="Self.FK_EmpresaCentrosTrabajoSIRCE_CentrosTrabajoSIRCE">
+            <End Role="CentrosTrabajoSIRCE" EntitySet="CentrosTrabajoSIRCE" />
+            <End Role="EmpresaCentrosTrabajoSIRCE" EntitySet="EmpresaCentrosTrabajoSIRCE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpresaCentrosTrabajoSIRCE_EmpresasSIRCE" Association="Self.FK_EmpresaCentrosTrabajoSIRCE_EmpresasSIRCE">
+            <End Role="EmpresasSIRCE" EntitySet="EmpresasSIRCE" />
+            <End Role="EmpresaCentrosTrabajoSIRCE" EntitySet="EmpresaCentrosTrabajoSIRCE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ListaCentrosTrabajo_CentrosTrabajoSIRCE" Association="Self.FK_ListaCentrosTrabajo_CentrosTrabajoSIRCE">
+            <End Role="CentrosTrabajoSIRCE" EntitySet="CentrosTrabajoSIRCE" />
+            <End Role="ListaCentrosTrabajo" EntitySet="ListaCentrosTrabajo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ListaCentrosTrabajo_Listas" Association="Self.FK_ListaCentrosTrabajo_Listas">
+            <End Role="Listas" EntitySet="Listas" />
+            <End Role="ListaCentrosTrabajo" EntitySet="ListaCentrosTrabajo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Listas_CentrosTrabajoSIRCE" Association="Self.FK_Listas_CentrosTrabajoSIRCE">
+            <End Role="CentrosTrabajoSIRCE" EntitySet="CentrosTrabajoSIRCE" />
+            <End Role="Listas" EntitySet="Listas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NormaTrabajador_NormasCompetencia" Association="Self.FK_NormaTrabajador_NormasCompetencia">
+            <End Role="NormasCompetencia" EntitySet="NormasCompetencia" />
+            <End Role="NormaTrabajador" EntitySet="NormaTrabajador" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NormaTrabajador_Trabajadores" Association="Self.FK_NormaTrabajador_Trabajadores">
+            <End Role="Trabajadores" EntitySet="Trabajadores" />
+            <End Role="NormaTrabajador" EntitySet="NormaTrabajador" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trabajadores_CentrosTrabajoSIRCE" Association="Self.FK_Trabajadores_CentrosTrabajoSIRCE">
+            <End Role="CentrosTrabajoSIRCE" EntitySet="CentrosTrabajoSIRCE" />
+            <End Role="Trabajadores" EntitySet="Trabajadores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trabajadores_ComprobantesEstudio" Association="Self.FK_Trabajadores_ComprobantesEstudio">
+            <End Role="DocumentosProbatorios" EntitySet="DocumentosProbatorios" />
+            <End Role="Trabajadores" EntitySet="Trabajadores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trabajadores_Escolaridades" Association="Self.FK_Trabajadores_Escolaridades">
+            <End Role="Escolaridades" EntitySet="Escolaridades" />
+            <End Role="Trabajadores" EntitySet="Trabajadores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trabajadores_Ocupaciones" Association="Self.FK_Trabajadores_Ocupaciones">
+            <End Role="Ocupaciones" EntitySet="Ocupaciones" />
+            <End Role="Trabajadores" EntitySet="Trabajadores" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SIRCEModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="SIRCEEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="spGetConsecutivos" ReturnType="Collection(SIRCEModel.spGetConsecutivos_Result)">
+            <Parameter Name="EmpresaSIRCEID" Mode="In" Type="Int32" />
+            <Parameter Name="ConsecutivoURID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="Acciones" EntityType="SIRCEModel.Acciones" />
+          <EntitySet Name="Acuses" EntityType="SIRCEModel.Acuses" />
+          <EntitySet Name="AreasTematicas" EntityType="SIRCEModel.AreasTematicas" />
+          <EntitySet Name="CentrosTrabajoSIRCE" EntityType="SIRCEModel.CentrosTrabajoSIRCE" />
+          <EntitySet Name="ConsecutivosUR" EntityType="SIRCEModel.ConsecutivosUR" />
+          <EntitySet Name="Constancias" EntityType="SIRCEModel.Constancias" />
+          <EntitySet Name="Cursos" EntityType="SIRCEModel.Cursos" />
+          <EntitySet Name="DocumentosProbatorios" EntityType="SIRCEModel.DocumentosProbatorios" />
+          <EntitySet Name="EmpresaCentrosTrabajoSIRCE" EntityType="SIRCEModel.EmpresaCentrosTrabajoSIRCE" />
+          <EntitySet Name="EmpresasSIRCE" EntityType="SIRCEModel.EmpresasSIRCE" />
+          <EntitySet Name="Escolaridades" EntityType="SIRCEModel.Escolaridades" />
+          <EntitySet Name="ListaCentrosTrabajo" EntityType="SIRCEModel.ListaCentrosTrabajo" />
+          <EntitySet Name="Listas" EntityType="SIRCEModel.Listas" />
+          <EntitySet Name="NormasCompetencia" EntityType="SIRCEModel.NormasCompetencia" />
+          <EntitySet Name="NormaTrabajador" EntityType="SIRCEModel.NormaTrabajador" />
+          <EntitySet Name="ObjetivosCapacitacion" EntityType="SIRCEModel.ObjetivosCapacitacion" />
+          <EntitySet Name="Ocupaciones" EntityType="SIRCEModel.Ocupaciones" />
+          <EntitySet Name="Trabajadores" EntityType="SIRCEModel.Trabajadores" />
+          <AssociationSet Name="FK_Acuses_Listas" Association="SIRCEModel.FK_Acuses_Listas">
+            <End Role="Listas" EntitySet="Listas" />
+            <End Role="Acuses" EntitySet="Acuses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cursos_AreasTematicas" Association="SIRCEModel.FK_Cursos_AreasTematicas">
+            <End Role="AreasTematicas" EntitySet="AreasTematicas" />
+            <End Role="Cursos" EntitySet="Cursos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpresaCentrosTrabajoSIRCE_CentrosTrabajoSIRCE" Association="SIRCEModel.FK_EmpresaCentrosTrabajoSIRCE_CentrosTrabajoSIRCE">
+            <End Role="CentrosTrabajoSIRCE" EntitySet="CentrosTrabajoSIRCE" />
+            <End Role="EmpresaCentrosTrabajoSIRCE" EntitySet="EmpresaCentrosTrabajoSIRCE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ListaCentrosTrabajo_CentrosTrabajoSIRCE" Association="SIRCEModel.FK_ListaCentrosTrabajo_CentrosTrabajoSIRCE">
+            <End Role="CentrosTrabajoSIRCE" EntitySet="CentrosTrabajoSIRCE" />
+            <End Role="ListaCentrosTrabajo" EntitySet="ListaCentrosTrabajo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Listas_CentrosTrabajoSIRCE" Association="SIRCEModel.FK_Listas_CentrosTrabajoSIRCE">
+            <End Role="CentrosTrabajoSIRCE" EntitySet="CentrosTrabajoSIRCE" />
+            <End Role="Listas" EntitySet="Listas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trabajadores_CentrosTrabajoSIRCE" Association="SIRCEModel.FK_Trabajadores_CentrosTrabajoSIRCE">
+            <End Role="CentrosTrabajoSIRCE" EntitySet="CentrosTrabajoSIRCE" />
+            <End Role="Trabajadores" EntitySet="Trabajadores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Constancias_Cursos" Association="SIRCEModel.FK_Constancias_Cursos">
+            <End Role="Cursos" EntitySet="Cursos" />
+            <End Role="Constancias" EntitySet="Constancias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Constancias_ListaCentrosTrabajo" Association="SIRCEModel.FK_Constancias_ListaCentrosTrabajo">
+            <End Role="ListaCentrosTrabajo" EntitySet="ListaCentrosTrabajo" />
+            <End Role="Constancias" EntitySet="Constancias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Constancias_Trabajadores" Association="SIRCEModel.FK_Constancias_Trabajadores">
+            <End Role="Trabajadores" EntitySet="Trabajadores" />
+            <End Role="Constancias" EntitySet="Constancias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cursos_EmpresasSIRCE" Association="SIRCEModel.FK_Cursos_EmpresasSIRCE">
+            <End Role="EmpresasSIRCE" EntitySet="EmpresasSIRCE" />
+            <End Role="Cursos" EntitySet="Cursos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cursos_ObjetivosCapacitacion" Association="SIRCEModel.FK_Cursos_ObjetivosCapacitacion">
+            <End Role="ObjetivosCapacitacion" EntitySet="ObjetivosCapacitacion" />
+            <End Role="Cursos" EntitySet="Cursos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trabajadores_ComprobantesEstudio" Association="SIRCEModel.FK_Trabajadores_ComprobantesEstudio">
+            <End Role="DocumentosProbatorios" EntitySet="DocumentosProbatorios" />
+            <End Role="Trabajadores" EntitySet="Trabajadores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpresaCentrosTrabajoSIRCE_EmpresasSIRCE" Association="SIRCEModel.FK_EmpresaCentrosTrabajoSIRCE_EmpresasSIRCE">
+            <End Role="EmpresasSIRCE" EntitySet="EmpresasSIRCE" />
+            <End Role="EmpresaCentrosTrabajoSIRCE" EntitySet="EmpresaCentrosTrabajoSIRCE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trabajadores_Escolaridades" Association="SIRCEModel.FK_Trabajadores_Escolaridades">
+            <End Role="Escolaridades" EntitySet="Escolaridades" />
+            <End Role="Trabajadores" EntitySet="Trabajadores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ListaCentrosTrabajo_Listas" Association="SIRCEModel.FK_ListaCentrosTrabajo_Listas">
+            <End Role="Listas" EntitySet="Listas" />
+            <End Role="ListaCentrosTrabajo" EntitySet="ListaCentrosTrabajo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NormaTrabajador_NormasCompetencia" Association="SIRCEModel.FK_NormaTrabajador_NormasCompetencia">
+            <End Role="NormasCompetencia" EntitySet="NormasCompetencia" />
+            <End Role="NormaTrabajador" EntitySet="NormaTrabajador" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NormaTrabajador_Trabajadores" Association="SIRCEModel.FK_NormaTrabajador_Trabajadores">
+            <End Role="Trabajadores" EntitySet="Trabajadores" />
+            <End Role="NormaTrabajador" EntitySet="NormaTrabajador" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trabajadores_Ocupaciones" Association="SIRCEModel.FK_Trabajadores_Ocupaciones">
+            <End Role="Ocupaciones" EntitySet="Ocupaciones" />
+            <End Role="Trabajadores" EntitySet="Trabajadores" />
+          </AssociationSet>
+          </EntityContainer>
+        <ComplexType Name="spGetConsecutivos_Result">
+          <Property Type="Int32" Name="ConsecutivoLista" Nullable="true" />
+          <Property Type="String" Name="ConsecutivoDC4" Nullable="true" MaxLength="16" />
+        </ComplexType>
+        <EntityType Name="Acciones">
+          <Key>
+            <PropertyRef Name="AccionID" />
+          </Key>
+          <Property Name="AccionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AccionDescripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Acuses">
+          <Key>
+            <PropertyRef Name="AcuseID" />
+          </Key>
+          <Property Name="AcuseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ListaID" Type="Int32" Nullable="false" />
+          <Property Name="FolioDC4" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="RFC" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="RazonSocial" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Direccion" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="AutenticidadAcuse" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Listas" Relationship="SIRCEModel.FK_Acuses_Listas" FromRole="Acuses" ToRole="Listas" />
+        </EntityType>
+        <EntityType Name="AreasTematicas">
+          <Key>
+            <PropertyRef Name="AreaTematicaID" />
+          </Key>
+          <Property Name="AreaTematicaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Clave" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Cursos" Relationship="SIRCEModel.FK_Cursos_AreasTematicas" FromRole="AreasTematicas" ToRole="Cursos" />
+        </EntityType>
+        <EntityType Name="CentrosTrabajoSIRCE">
+          <Key>
+            <PropertyRef Name="CentroTrabajoSIRCEID" />
+          </Key>
+          <Property Name="CentroTrabajoSIRCEID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CentroTrabajoID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="EmpresaCentrosTrabajoSIRCE" Relationship="SIRCEModel.FK_EmpresaCentrosTrabajoSIRCE_CentrosTrabajoSIRCE" FromRole="CentrosTrabajoSIRCE" ToRole="EmpresaCentrosTrabajoSIRCE" />
+          <NavigationProperty Name="ListaCentrosTrabajo" Relationship="SIRCEModel.FK_ListaCentrosTrabajo_CentrosTrabajoSIRCE" FromRole="CentrosTrabajoSIRCE" ToRole="ListaCentrosTrabajo" />
+          <NavigationProperty Name="Listas" Relationship="SIRCEModel.FK_Listas_CentrosTrabajoSIRCE" FromRole="CentrosTrabajoSIRCE" ToRole="Listas" />
+          <NavigationProperty Name="Trabajadores" Relationship="SIRCEModel.FK_Trabajadores_CentrosTrabajoSIRCE" FromRole="CentrosTrabajoSIRCE" ToRole="Trabajadores" />
+        </EntityType>
+        <EntityType Name="ConsecutivosUR">
+          <Key>
+            <PropertyRef Name="ConsecutivoURID" />
+          </Key>
+          <Property Name="ConsecutivoURID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UnidadResponsableID" Type="Int32" Nullable="false" />
+          <Property Name="ConsecutivoDC4" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Constancias">
+          <Key>
+            <PropertyRef Name="ConstanciaID" />
+          </Key>
+          <Property Name="ConstanciaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ListaCentroTrabajoID" Type="Int32" Nullable="false" />
+          <Property Name="CursoID" Type="Int32" Nullable="false" />
+          <Property Name="TrabajadorID" Type="Int32" Nullable="false" />
+          <Property Name="Eliminado" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Cursos" Relationship="SIRCEModel.FK_Constancias_Cursos" FromRole="Constancias" ToRole="Cursos" />
+          <NavigationProperty Name="ListaCentrosTrabajo" Relationship="SIRCEModel.FK_Constancias_ListaCentrosTrabajo" FromRole="Constancias" ToRole="ListaCentrosTrabajo" />
+          <NavigationProperty Name="Trabajadores" Relationship="SIRCEModel.FK_Constancias_Trabajadores" FromRole="Constancias" ToRole="Trabajadores" />
+        </EntityType>
+        <EntityType Name="Cursos">
+          <Key>
+            <PropertyRef Name="CursoID" />
+          </Key>
+          <Property Name="CursoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Duracion" Type="Byte" Nullable="false" />
+          <Property Name="AreaTematicaID" Type="Int32" Nullable="false" />
+          <Property Name="FechaInicio" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FechaTermino" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TipoAgenteCapacitadorID" Type="Byte" Nullable="false" />
+          <Property Name="RegistroAgenteExterno" Type="String" MaxLength="18" FixedLength="false" Unicode="true" />
+          <Property Name="ModalidadCapacitacionID" Type="Byte" Nullable="false" />
+          <Property Name="ObjetivoCapacitacionID" Type="Int32" Nullable="false" />
+          <Property Name="EmpresaSIRCEID" Type="Int32" Nullable="false" />
+          <Property Name="Eliminado" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="AreasTematicas" Relationship="SIRCEModel.FK_Cursos_AreasTematicas" FromRole="Cursos" ToRole="AreasTematicas" />
+          <NavigationProperty Name="Constancias" Relationship="SIRCEModel.FK_Constancias_Cursos" FromRole="Cursos" ToRole="Constancias" />
+          <NavigationProperty Name="EmpresasSIRCE" Relationship="SIRCEModel.FK_Cursos_EmpresasSIRCE" FromRole="Cursos" ToRole="EmpresasSIRCE" />
+          <NavigationProperty Name="ObjetivosCapacitacion" Relationship="SIRCEModel.FK_Cursos_ObjetivosCapacitacion" FromRole="Cursos" ToRole="ObjetivosCapacitacion" />
+        </EntityType>
+        <EntityType Name="DocumentosProbatorios">
+          <Key>
+            <PropertyRef Name="DocumentoProbatorioID" />
+          </Key>
+          <Property Name="DocumentoProbatorioID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Trabajadores" Relationship="SIRCEModel.FK_Trabajadores_ComprobantesEstudio" FromRole="DocumentosProbatorios" ToRole="Trabajadores" />
+        </EntityType>
+        <EntityType Name="EmpresaCentrosTrabajoSIRCE">
+          <Key>
+            <PropertyRef Name="EmpresaCentroTrabajoSIRCEID" />
+          </Key>
+          <Property Name="EmpresaCentroTrabajoSIRCEID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CentroTrabajoSIRCEID" Type="Int32" Nullable="false" />
+          <Property Name="EmpresaSIRCEID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CentrosTrabajoSIRCE" Relationship="SIRCEModel.FK_EmpresaCentrosTrabajoSIRCE_CentrosTrabajoSIRCE" FromRole="EmpresaCentrosTrabajoSIRCE" ToRole="CentrosTrabajoSIRCE" />
+          <NavigationProperty Name="EmpresasSIRCE" Relationship="SIRCEModel.FK_EmpresaCentrosTrabajoSIRCE_EmpresasSIRCE" FromRole="EmpresaCentrosTrabajoSIRCE" ToRole="EmpresasSIRCE" />
+        </EntityType>
+        <EntityType Name="EmpresasSIRCE">
+          <Key>
+            <PropertyRef Name="EmpresaSIRCEID" />
+          </Key>
+          <Property Name="EmpresaSIRCEID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmpresaID" Type="Int32" Nullable="false" />
+          <Property Name="ConsecutivoLista" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cursos" Relationship="SIRCEModel.FK_Cursos_EmpresasSIRCE" FromRole="EmpresasSIRCE" ToRole="Cursos" />
+          <NavigationProperty Name="EmpresaCentrosTrabajoSIRCE" Relationship="SIRCEModel.FK_EmpresaCentrosTrabajoSIRCE_EmpresasSIRCE" FromRole="EmpresasSIRCE" ToRole="EmpresaCentrosTrabajoSIRCE" />
+        </EntityType>
+        <EntityType Name="Escolaridades">
+          <Key>
+            <PropertyRef Name="EscolaridadID" />
+          </Key>
+          <Property Name="EscolaridadID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Trabajadores" Relationship="SIRCEModel.FK_Trabajadores_Escolaridades" FromRole="Escolaridades" ToRole="Trabajadores" />
+        </EntityType>
+        <EntityType Name="ListaCentrosTrabajo">
+          <Key>
+            <PropertyRef Name="ListaCentroTrabajoID" />
+          </Key>
+          <Property Name="ListaCentroTrabajoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ListaID" Type="Int32" Nullable="false" />
+          <Property Name="CentroTrabajoSIRCEID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CentrosTrabajoSIRCE" Relationship="SIRCEModel.FK_ListaCentrosTrabajo_CentrosTrabajoSIRCE" FromRole="ListaCentrosTrabajo" ToRole="CentrosTrabajoSIRCE" />
+          <NavigationProperty Name="Constancias" Relationship="SIRCEModel.FK_Constancias_ListaCentrosTrabajo" FromRole="ListaCentrosTrabajo" ToRole="Constancias" />
+          <NavigationProperty Name="Listas" Relationship="SIRCEModel.FK_ListaCentrosTrabajo_Listas" FromRole="ListaCentrosTrabajo" ToRole="Listas" />
+        </EntityType>
+        <EntityType Name="Listas">
+          <Key>
+            <PropertyRef Name="ListaID" />
+          </Key>
+          <Property Name="ListaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="FolioEmpresa" Type="Int32" />
+          <Property Name="FechaPresentacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="NumeroConstancias" Type="Int32" Nullable="false" />
+          <Property Name="NombreRepresentante" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Hombres" Type="Byte" />
+          <Property Name="Mujeres" Type="Byte" />
+          <Property Name="CentroTrabajoSIRCEID" Type="Int32" Nullable="false" />
+          <Property Name="Origen" Type="Byte" Nullable="false" />
+          <Property Name="UsuarioCreacion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="UnidadResponsableID" Type="Int32" Nullable="false" />
+          <Property Name="UsuarioEnvio" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="FechaEnvio" Type="DateTime" Precision="3" />
+          <Property Name="Estatus" Type="Byte" Nullable="false" />
+          <Property Name="Eliminado" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Acuses" Relationship="SIRCEModel.FK_Acuses_Listas" FromRole="Listas" ToRole="Acuses" />
+          <NavigationProperty Name="CentrosTrabajoSIRCE" Relationship="SIRCEModel.FK_Listas_CentrosTrabajoSIRCE" FromRole="Listas" ToRole="CentrosTrabajoSIRCE" />
+          <NavigationProperty Name="ListaCentrosTrabajo" Relationship="SIRCEModel.FK_ListaCentrosTrabajo_Listas" FromRole="Listas" ToRole="ListaCentrosTrabajo" />
+        </EntityType>
+        <EntityType Name="NormasCompetencia">
+          <Key>
+            <PropertyRef Name="NormaCompetenciaID" />
+          </Key>
+          <Property Name="NormaCompetenciaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Clave" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="NormaTrabajador" Relationship="SIRCEModel.FK_NormaTrabajador_NormasCompetencia" FromRole="NormasCompetencia" ToRole="NormaTrabajador" />
+        </EntityType>
+        <EntityType Name="NormaTrabajador">
+          <Key>
+            <PropertyRef Name="NormaTrabajadorID" />
+          </Key>
+          <Property Name="NormaTrabajadorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TrabajadorID" Type="Int32" Nullable="false" />
+          <Property Name="NormaCompetenciaID" Type="Int32" Nullable="false" />
+          <Property Name="FechaEmision" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Eliminado" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="NormasCompetencia" Relationship="SIRCEModel.FK_NormaTrabajador_NormasCompetencia" FromRole="NormaTrabajador" ToRole="NormasCompetencia" />
+          <NavigationProperty Name="Trabajadores" Relationship="SIRCEModel.FK_NormaTrabajador_Trabajadores" FromRole="NormaTrabajador" ToRole="Trabajadores" />
+        </EntityType>
+        <EntityType Name="ObjetivosCapacitacion">
+          <Key>
+            <PropertyRef Name="ObjetivoCapacitacionID" />
+          </Key>
+          <Property Name="ObjetivoCapacitacionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="70" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Cursos" Relationship="SIRCEModel.FK_Cursos_ObjetivosCapacitacion" FromRole="ObjetivosCapacitacion" ToRole="Cursos" />
+        </EntityType>
+        <EntityType Name="Ocupaciones">
+          <Key>
+            <PropertyRef Name="OcupacionID" />
+          </Key>
+          <Property Name="OcupacionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Clave" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Trabajadores" Relationship="SIRCEModel.FK_Trabajadores_Ocupaciones" FromRole="Ocupaciones" ToRole="Trabajadores" />
+        </EntityType>
+        <EntityType Name="Trabajadores">
+          <Key>
+            <PropertyRef Name="TrabajadorID" />
+          </Key>
+          <Property Name="TrabajadorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CURP" Type="String" Nullable="false" MaxLength="18" FixedLength="false" Unicode="true" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ApellidoPaterno" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ApellidoMaterno" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OcupacionID" Type="Int32" Nullable="false" />
+          <Property Name="EntidadFederativaID" Type="Int32" Nullable="false" />
+          <Property Name="MunicipioID" Type="Int32" Nullable="false" />
+          <Property Name="EscolaridadID" Type="Int32" />
+          <Property Name="InstitucionesEducativasID" Type="Int32" />
+          <Property Name="ComprobanteEstudioID" Type="Int32" />
+          <Property Name="CentroTrabajoSIRCEID" Type="Int32" Nullable="false" />
+          <Property Name="Genero" Type="Byte" Nullable="false" />
+          <Property Name="FechaNacimiento" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FechaCreacion" Type="DateTime" Precision="3" />
+          <Property Name="Eliminado" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="CentrosTrabajoSIRCE" Relationship="SIRCEModel.FK_Trabajadores_CentrosTrabajoSIRCE" FromRole="Trabajadores" ToRole="CentrosTrabajoSIRCE" />
+          <NavigationProperty Name="Constancias" Relationship="SIRCEModel.FK_Constancias_Trabajadores" FromRole="Trabajadores" ToRole="Constancias" />
+          <NavigationProperty Name="DocumentosProbatorios" Relationship="SIRCEModel.FK_Trabajadores_ComprobantesEstudio" FromRole="Trabajadores" ToRole="DocumentosProbatorios" />
+          <NavigationProperty Name="Escolaridades" Relationship="SIRCEModel.FK_Trabajadores_Escolaridades" FromRole="Trabajadores" ToRole="Escolaridades" />
+          <NavigationProperty Name="NormaTrabajador" Relationship="SIRCEModel.FK_NormaTrabajador_Trabajadores" FromRole="Trabajadores" ToRole="NormaTrabajador" />
+          <NavigationProperty Name="Ocupaciones" Relationship="SIRCEModel.FK_Trabajadores_Ocupaciones" FromRole="Trabajadores" ToRole="Ocupaciones" />
+        </EntityType>
+        <Association Name="FK_Acuses_Listas">
+          <End Type="SIRCEModel.Listas" Role="Listas" Multiplicity="1" />
+          <End Type="SIRCEModel.Acuses" Role="Acuses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Listas">
+              <PropertyRef Name="ListaID" />
+            </Principal>
+            <Dependent Role="Acuses">
+              <PropertyRef Name="ListaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cursos_AreasTematicas">
+          <End Type="SIRCEModel.AreasTematicas" Role="AreasTematicas" Multiplicity="1" />
+          <End Type="SIRCEModel.Cursos" Role="Cursos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AreasTematicas">
+              <PropertyRef Name="AreaTematicaID" />
+            </Principal>
+            <Dependent Role="Cursos">
+              <PropertyRef Name="AreaTematicaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpresaCentrosTrabajoSIRCE_CentrosTrabajoSIRCE">
+          <End Type="SIRCEModel.CentrosTrabajoSIRCE" Role="CentrosTrabajoSIRCE" Multiplicity="1" />
+          <End Type="SIRCEModel.EmpresaCentrosTrabajoSIRCE" Role="EmpresaCentrosTrabajoSIRCE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CentrosTrabajoSIRCE">
+              <PropertyRef Name="CentroTrabajoSIRCEID" />
+            </Principal>
+            <Dependent Role="EmpresaCentrosTrabajoSIRCE">
+              <PropertyRef Name="CentroTrabajoSIRCEID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ListaCentrosTrabajo_CentrosTrabajoSIRCE">
+          <End Type="SIRCEModel.CentrosTrabajoSIRCE" Role="CentrosTrabajoSIRCE" Multiplicity="1" />
+          <End Type="SIRCEModel.ListaCentrosTrabajo" Role="ListaCentrosTrabajo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CentrosTrabajoSIRCE">
+              <PropertyRef Name="CentroTrabajoSIRCEID" />
+            </Principal>
+            <Dependent Role="ListaCentrosTrabajo">
+              <PropertyRef Name="CentroTrabajoSIRCEID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Listas_CentrosTrabajoSIRCE">
+          <End Type="SIRCEModel.CentrosTrabajoSIRCE" Role="CentrosTrabajoSIRCE" Multiplicity="1" />
+          <End Type="SIRCEModel.Listas" Role="Listas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CentrosTrabajoSIRCE">
+              <PropertyRef Name="CentroTrabajoSIRCEID" />
+            </Principal>
+            <Dependent Role="Listas">
+              <PropertyRef Name="CentroTrabajoSIRCEID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trabajadores_CentrosTrabajoSIRCE">
+          <End Type="SIRCEModel.CentrosTrabajoSIRCE" Role="CentrosTrabajoSIRCE" Multiplicity="1" />
+          <End Type="SIRCEModel.Trabajadores" Role="Trabajadores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CentrosTrabajoSIRCE">
+              <PropertyRef Name="CentroTrabajoSIRCEID" />
+            </Principal>
+            <Dependent Role="Trabajadores">
+              <PropertyRef Name="CentroTrabajoSIRCEID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Constancias_Cursos">
+          <End Type="SIRCEModel.Cursos" Role="Cursos" Multiplicity="1" />
+          <End Type="SIRCEModel.Constancias" Role="Constancias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cursos">
+              <PropertyRef Name="CursoID" />
+            </Principal>
+            <Dependent Role="Constancias">
+              <PropertyRef Name="CursoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Constancias_ListaCentrosTrabajo">
+          <End Type="SIRCEModel.ListaCentrosTrabajo" Role="ListaCentrosTrabajo" Multiplicity="1" />
+          <End Type="SIRCEModel.Constancias" Role="Constancias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ListaCentrosTrabajo">
+              <PropertyRef Name="ListaCentroTrabajoID" />
+            </Principal>
+            <Dependent Role="Constancias">
+              <PropertyRef Name="ListaCentroTrabajoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Constancias_Trabajadores">
+          <End Type="SIRCEModel.Trabajadores" Role="Trabajadores" Multiplicity="1" />
+          <End Type="SIRCEModel.Constancias" Role="Constancias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trabajadores">
+              <PropertyRef Name="TrabajadorID" />
+            </Principal>
+            <Dependent Role="Constancias">
+              <PropertyRef Name="TrabajadorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cursos_EmpresasSIRCE">
+          <End Type="SIRCEModel.EmpresasSIRCE" Role="EmpresasSIRCE" Multiplicity="1" />
+          <End Type="SIRCEModel.Cursos" Role="Cursos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmpresasSIRCE">
+              <PropertyRef Name="EmpresaSIRCEID" />
+            </Principal>
+            <Dependent Role="Cursos">
+              <PropertyRef Name="EmpresaSIRCEID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cursos_ObjetivosCapacitacion">
+          <End Type="SIRCEModel.ObjetivosCapacitacion" Role="ObjetivosCapacitacion" Multiplicity="1" />
+          <End Type="SIRCEModel.Cursos" Role="Cursos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ObjetivosCapacitacion">
+              <PropertyRef Name="ObjetivoCapacitacionID" />
+            </Principal>
+            <Dependent Role="Cursos">
+              <PropertyRef Name="ObjetivoCapacitacionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trabajadores_ComprobantesEstudio">
+          <End Type="SIRCEModel.DocumentosProbatorios" Role="DocumentosProbatorios" Multiplicity="0..1" />
+          <End Type="SIRCEModel.Trabajadores" Role="Trabajadores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DocumentosProbatorios">
+              <PropertyRef Name="DocumentoProbatorioID" />
+            </Principal>
+            <Dependent Role="Trabajadores">
+              <PropertyRef Name="ComprobanteEstudioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpresaCentrosTrabajoSIRCE_EmpresasSIRCE">
+          <End Type="SIRCEModel.EmpresasSIRCE" Role="EmpresasSIRCE" Multiplicity="1" />
+          <End Type="SIRCEModel.EmpresaCentrosTrabajoSIRCE" Role="EmpresaCentrosTrabajoSIRCE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmpresasSIRCE">
+              <PropertyRef Name="EmpresaSIRCEID" />
+            </Principal>
+            <Dependent Role="EmpresaCentrosTrabajoSIRCE">
+              <PropertyRef Name="EmpresaSIRCEID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trabajadores_Escolaridades">
+          <End Type="SIRCEModel.Escolaridades" Role="Escolaridades" Multiplicity="0..1" />
+          <End Type="SIRCEModel.Trabajadores" Role="Trabajadores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Escolaridades">
+              <PropertyRef Name="EscolaridadID" />
+            </Principal>
+            <Dependent Role="Trabajadores">
+              <PropertyRef Name="EscolaridadID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ListaCentrosTrabajo_Listas">
+          <End Type="SIRCEModel.Listas" Role="Listas" Multiplicity="1" />
+          <End Type="SIRCEModel.ListaCentrosTrabajo" Role="ListaCentrosTrabajo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Listas">
+              <PropertyRef Name="ListaID" />
+            </Principal>
+            <Dependent Role="ListaCentrosTrabajo">
+              <PropertyRef Name="ListaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NormaTrabajador_NormasCompetencia">
+          <End Type="SIRCEModel.NormasCompetencia" Role="NormasCompetencia" Multiplicity="1" />
+          <End Type="SIRCEModel.NormaTrabajador" Role="NormaTrabajador" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NormasCompetencia">
+              <PropertyRef Name="NormaCompetenciaID" />
+            </Principal>
+            <Dependent Role="NormaTrabajador">
+              <PropertyRef Name="NormaCompetenciaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NormaTrabajador_Trabajadores">
+          <End Type="SIRCEModel.Trabajadores" Role="Trabajadores" Multiplicity="1" />
+          <End Type="SIRCEModel.NormaTrabajador" Role="NormaTrabajador" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trabajadores">
+              <PropertyRef Name="TrabajadorID" />
+            </Principal>
+            <Dependent Role="NormaTrabajador">
+              <PropertyRef Name="TrabajadorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trabajadores_Ocupaciones">
+          <End Type="SIRCEModel.Ocupaciones" Role="Ocupaciones" Multiplicity="1" />
+          <End Type="SIRCEModel.Trabajadores" Role="Trabajadores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ocupaciones">
+              <PropertyRef Name="OcupacionID" />
+            </Principal>
+            <Dependent Role="Trabajadores">
+              <PropertyRef Name="OcupacionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SIRCEModelStoreContainer" CdmEntityContainer="SIRCEEntities">
+          <FunctionImportMapping FunctionImportName="spGetConsecutivos" FunctionName="SIRCEModel.Store.spGetConsecutivos">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SIRCEModel.spGetConsecutivos_Result">
+                <ScalarProperty Name="ConsecutivoLista" ColumnName="ConsecutivoLista" />
+                <ScalarProperty Name="ConsecutivoDC4" ColumnName="ConsecutivoDC4" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="Acciones">
+            <EntityTypeMapping TypeName="SIRCEModel.Acciones">
+              <MappingFragment StoreEntitySet="Acciones">
+                <ScalarProperty Name="AccionDescripcion" ColumnName="AccionDescripcion" />
+                <ScalarProperty Name="AccionID" ColumnName="AccionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Acuses">
+            <EntityTypeMapping TypeName="SIRCEModel.Acuses">
+              <MappingFragment StoreEntitySet="Acuses">
+                <ScalarProperty Name="AutenticidadAcuse" ColumnName="AutenticidadAcuse" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="RazonSocial" ColumnName="RazonSocial" />
+                <ScalarProperty Name="RFC" ColumnName="RFC" />
+                <ScalarProperty Name="FolioDC4" ColumnName="FolioDC4" />
+                <ScalarProperty Name="ListaID" ColumnName="ListaID" />
+                <ScalarProperty Name="AcuseID" ColumnName="AcuseID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AreasTematicas">
+            <EntityTypeMapping TypeName="SIRCEModel.AreasTematicas">
+              <MappingFragment StoreEntitySet="AreasTematicas">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Clave" ColumnName="Clave" />
+                <ScalarProperty Name="AreaTematicaID" ColumnName="AreaTematicaID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CentrosTrabajoSIRCE">
+            <EntityTypeMapping TypeName="SIRCEModel.CentrosTrabajoSIRCE">
+              <MappingFragment StoreEntitySet="CentrosTrabajoSIRCE">
+                <ScalarProperty Name="CentroTrabajoID" ColumnName="CentroTrabajoID" />
+                <ScalarProperty Name="CentroTrabajoSIRCEID" ColumnName="CentroTrabajoSIRCEID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ConsecutivosUR">
+            <EntityTypeMapping TypeName="SIRCEModel.ConsecutivosUR">
+              <MappingFragment StoreEntitySet="ConsecutivosUR">
+                <ScalarProperty Name="ConsecutivoDC4" ColumnName="ConsecutivoDC4" />
+                <ScalarProperty Name="UnidadResponsableID" ColumnName="UnidadResponsableID" />
+                <ScalarProperty Name="ConsecutivoURID" ColumnName="ConsecutivoURID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Constancias">
+            <EntityTypeMapping TypeName="SIRCEModel.Constancias">
+              <MappingFragment StoreEntitySet="Constancias">
+                <ScalarProperty Name="Eliminado" ColumnName="Eliminado" />
+                <ScalarProperty Name="TrabajadorID" ColumnName="TrabajadorID" />
+                <ScalarProperty Name="CursoID" ColumnName="CursoID" />
+                <ScalarProperty Name="ListaCentroTrabajoID" ColumnName="ListaCentroTrabajoID" />
+                <ScalarProperty Name="ConstanciaID" ColumnName="ConstanciaID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cursos">
+            <EntityTypeMapping TypeName="SIRCEModel.Cursos">
+              <MappingFragment StoreEntitySet="Cursos">
+                <ScalarProperty Name="Eliminado" ColumnName="Eliminado" />
+                <ScalarProperty Name="EmpresaSIRCEID" ColumnName="EmpresaSIRCEID" />
+                <ScalarProperty Name="ObjetivoCapacitacionID" ColumnName="ObjetivoCapacitacionID" />
+                <ScalarProperty Name="ModalidadCapacitacionID" ColumnName="ModalidadCapacitacionID" />
+                <ScalarProperty Name="RegistroAgenteExterno" ColumnName="RegistroAgenteExterno" />
+                <ScalarProperty Name="TipoAgenteCapacitadorID" ColumnName="TipoAgenteCapacitadorID" />
+                <ScalarProperty Name="FechaTermino" ColumnName="FechaTermino" />
+                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
+                <ScalarProperty Name="AreaTematicaID" ColumnName="AreaTematicaID" />
+                <ScalarProperty Name="Duracion" ColumnName="Duracion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="CursoID" ColumnName="CursoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DocumentosProbatorios">
+            <EntityTypeMapping TypeName="SIRCEModel.DocumentosProbatorios">
+              <MappingFragment StoreEntitySet="DocumentosProbatorios">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="DocumentoProbatorioID" ColumnName="DocumentoProbatorioID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmpresaCentrosTrabajoSIRCE">
+            <EntityTypeMapping TypeName="SIRCEModel.EmpresaCentrosTrabajoSIRCE">
+              <MappingFragment StoreEntitySet="EmpresaCentrosTrabajoSIRCE">
+                <ScalarProperty Name="EmpresaSIRCEID" ColumnName="EmpresaSIRCEID" />
+                <ScalarProperty Name="CentroTrabajoSIRCEID" ColumnName="CentroTrabajoSIRCEID" />
+                <ScalarProperty Name="EmpresaCentroTrabajoSIRCEID" ColumnName="EmpresaCentroTrabajoSIRCEID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmpresasSIRCE">
+            <EntityTypeMapping TypeName="SIRCEModel.EmpresasSIRCE">
+              <MappingFragment StoreEntitySet="EmpresasSIRCE">
+                <ScalarProperty Name="ConsecutivoLista" ColumnName="ConsecutivoLista" />
+                <ScalarProperty Name="EmpresaID" ColumnName="EmpresaID" />
+                <ScalarProperty Name="EmpresaSIRCEID" ColumnName="EmpresaSIRCEID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Escolaridades">
+            <EntityTypeMapping TypeName="SIRCEModel.Escolaridades">
+              <MappingFragment StoreEntitySet="Escolaridades">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="EscolaridadID" ColumnName="EscolaridadID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ListaCentrosTrabajo">
+            <EntityTypeMapping TypeName="SIRCEModel.ListaCentrosTrabajo">
+              <MappingFragment StoreEntitySet="ListaCentrosTrabajo">
+                <ScalarProperty Name="CentroTrabajoSIRCEID" ColumnName="CentroTrabajoSIRCEID" />
+                <ScalarProperty Name="ListaID" ColumnName="ListaID" />
+                <ScalarProperty Name="ListaCentroTrabajoID" ColumnName="ListaCentroTrabajoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Listas">
+            <EntityTypeMapping TypeName="SIRCEModel.Listas">
+              <MappingFragment StoreEntitySet="Listas">
+                <ScalarProperty Name="Eliminado" ColumnName="Eliminado" />
+                <ScalarProperty Name="Estatus" ColumnName="Estatus" />
+                <ScalarProperty Name="FechaEnvio" ColumnName="FechaEnvio" />
+                <ScalarProperty Name="UsuarioEnvio" ColumnName="UsuarioEnvio" />
+                <ScalarProperty Name="UnidadResponsableID" ColumnName="UnidadResponsableID" />
+                <ScalarProperty Name="UsuarioCreacion" ColumnName="UsuarioCreacion" />
+                <ScalarProperty Name="Origen" ColumnName="Origen" />
+                <ScalarProperty Name="CentroTrabajoSIRCEID" ColumnName="CentroTrabajoSIRCEID" />
+                <ScalarProperty Name="Mujeres" ColumnName="Mujeres" />
+                <ScalarProperty Name="Hombres" ColumnName="Hombres" />
+                <ScalarProperty Name="NombreRepresentante" ColumnName="NombreRepresentante" />
+                <ScalarProperty Name="NumeroConstancias" ColumnName="NumeroConstancias" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="FechaPresentacion" ColumnName="FechaPresentacion" />
+                <ScalarProperty Name="FolioEmpresa" ColumnName="FolioEmpresa" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="ListaID" ColumnName="ListaID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NormasCompetencia">
+            <EntityTypeMapping TypeName="SIRCEModel.NormasCompetencia">
+              <MappingFragment StoreEntitySet="NormasCompetencia">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Clave" ColumnName="Clave" />
+                <ScalarProperty Name="NormaCompetenciaID" ColumnName="NormaCompetenciaID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NormaTrabajador">
+            <EntityTypeMapping TypeName="SIRCEModel.NormaTrabajador">
+              <MappingFragment StoreEntitySet="NormaTrabajador">
+                <ScalarProperty Name="Eliminado" ColumnName="Eliminado" />
+                <ScalarProperty Name="FechaEmision" ColumnName="FechaEmision" />
+                <ScalarProperty Name="NormaCompetenciaID" ColumnName="NormaCompetenciaID" />
+                <ScalarProperty Name="TrabajadorID" ColumnName="TrabajadorID" />
+                <ScalarProperty Name="NormaTrabajadorID" ColumnName="NormaTrabajadorID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ObjetivosCapacitacion">
+            <EntityTypeMapping TypeName="SIRCEModel.ObjetivosCapacitacion">
+              <MappingFragment StoreEntitySet="ObjetivosCapacitacion">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="ObjetivoCapacitacionID" ColumnName="ObjetivoCapacitacionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ocupaciones">
+            <EntityTypeMapping TypeName="SIRCEModel.Ocupaciones">
+              <MappingFragment StoreEntitySet="Ocupaciones">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Clave" ColumnName="Clave" />
+                <ScalarProperty Name="OcupacionID" ColumnName="OcupacionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Trabajadores">
+            <EntityTypeMapping TypeName="SIRCEModel.Trabajadores">
+              <MappingFragment StoreEntitySet="Trabajadores">
+                <ScalarProperty Name="Eliminado" ColumnName="Eliminado" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+                <ScalarProperty Name="Genero" ColumnName="Genero" />
+                <ScalarProperty Name="CentroTrabajoSIRCEID" ColumnName="CentroTrabajoSIRCEID" />
+                <ScalarProperty Name="ComprobanteEstudioID" ColumnName="ComprobanteEstudioID" />
+                <ScalarProperty Name="InstitucionesEducativasID" ColumnName="InstitucionesEducativasID" />
+                <ScalarProperty Name="EscolaridadID" ColumnName="EscolaridadID" />
+                <ScalarProperty Name="MunicipioID" ColumnName="MunicipioID" />
+                <ScalarProperty Name="EntidadFederativaID" ColumnName="EntidadFederativaID" />
+                <ScalarProperty Name="OcupacionID" ColumnName="OcupacionID" />
+                <ScalarProperty Name="ApellidoMaterno" ColumnName="ApellidoMaterno" />
+                <ScalarProperty Name="ApellidoPaterno" ColumnName="ApellidoPaterno" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="CURP" ColumnName="CURP" />
+                <ScalarProperty Name="TrabajadorID" ColumnName="TrabajadorID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

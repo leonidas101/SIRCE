@@ -1,0 +1,138 @@
+﻿@model STPS.SIRCE.Web.Models.TableroControlModel
+@{
+    ViewBag.Title = "Datos";
+    Layout = null;
+}
+
+<form id="regionDatos">
+    <fieldset>
+        <legend>Campos obligatorios para la lista*:</legend>
+        <div class="col-lg-4 form-group">
+            <label for="nombreLista"><span class="badge pull-left">1</span>&nbsp; Nombre de la Lista*:</label>
+            <input type="text" class="validate[required minSize[3]] form-control" id="nombreLista" placeholder="Nombre de la Lista:" maxlength="150" />
+        </div>
+        <div class="col-lg-4 form-group">
+            <label for="fechaPresentacion"><span class="badge pull-left">2</span>&nbsp; Fecha de Presentacion*:</label>
+            <input type="text" class="validate[required] form-control" id="fechaPresentacion" />
+        </div>
+        <div class="col-lg-4 form-group">
+            <label for="numeroHombres"><span class="badge pull-left">3</span>&nbsp; Número de Hombres*:</label>
+            <input type="text" class="validate[required] form-control" id="numeroHombres" placeholder="Número de Constancias" />
+        </div>
+        <div class="col-lg-4 form-group">
+            <label for="numeroMujeres"><span class="badge pull-left">4</span>&nbsp; Número de Mujeres*:</label>
+            <input type="text" class="validate[required] form-control" id="numeroMujeres" placeholder="Número de Constancias" />
+        </div>
+        <div class="col-lg-4 form-group">
+            <label for="nombreRepresentante"><span class="badge pull-left">5</span>&nbsp;Nombre del Representante Legal*:</label>
+            <input type="text" class="validate[required minSize[3]] form-control" id="nombreRepresentante" placeholder="Nombre del Representante Legal:" maxlength="150" />
+        </div>
+        <div class="col-lg-4 form-group">
+            <label for="numeroConstancias"><span class="badge pull-left">i</span>&nbsp; Número de Constancias*:</label>
+            <input id="numeroConstancias" class="form-control" disabled/>
+        </div>
+    </fieldset>
+</form>
+@* Seccion de Botones*@
+<div class="col-lg-12 fixOptionBtn">
+    <div class="col-lg-9"><button id="regresarBtn" type="button" class="btn btn-primary pull-right">Regresar</button></div>
+    <div class="col-lg-2"><button id="accionBtn" type="button" class="btn btn-primary pull-right ">Guardar Lista</button></div>
+    <div class="col-lg-1"></div>
+</div>
+
+
+<script type="text/javascript">
+    //Modelo en Cache para llamadas posteriores a Servidor.
+    var model = @Html.Raw(Json.Encode(Model));
+    console.log(model);
+    $(document).ready(function () {
+        var legend = '';
+        var type = 'question';
+        $("#fechaPresentacion").dynamicCalendar({});
+        $("#numeroHombres").on('keyup', function() {
+            $("#numeroConstancias").val(parseInt($("#numeroHombres").val()) + parseInt($("#numeroMujeres").val()));
+        });
+        $("#numeroMujeres").on('keyup', function() {
+            $("#numeroConstancias").val(parseInt($("#numeroHombres").val()) + parseInt($("#numeroMujeres").val()));
+        });
+        //Sí es Crear Lista
+        if(model.accion == $.grep(model.acciones, function(obj) { return obj.catalogoDescripcion == 'Crear'})[0].catalogoID){
+            legend = '¿Desea guardar la lista ' + $("#nombreLista").val() + '?';
+        }
+        //Sí es Eliminar Lista
+        else if (model.accion == $.grep(model.acciones, function(obj) { return obj.catalogoDescripcion == 'Eliminar'})[0].catalogoID){
+            AsignarCampos();
+            $("#regionDatos").dynamicLock({});
+            $("#accionBtn").text("Elminar Lista");
+            legend = '¿Desea eliminar la lista ' + $("#nombreLista").val() + '?';
+            type = 'warning';
+        }
+        //Sí es Consultar Lista
+        else if(model.accion == $.grep(model.acciones, function(obj) { return obj.catalogoDescripcion == 'Consultar'})[0].catalogoID){
+            AsignarCampos();
+            $("#regionDatos").dynamicLock({});
+            $("#accionBtn").addClass("hidden");
+        }
+        //Sí es Editar Lista
+        else if(model.accion == $.grep(model.acciones, function(obj) { return obj.catalogoDescripcion == 'Editar'})[0].catalogoID){
+            AsignarCampos();
+            legend = '¿Desea editar la lista ' + $("#nombreLista").val() + '?';
+        }
+        $("#accionBtn").click(function(){
+            var md = $.Zebra_Dialog(legend
+            ,{
+                'type':     type,
+                'title':    'Confirmar Datos',
+                'buttons':  [
+                                {caption: 'Sí', callback: function() {
+                                    PostLista(); 
+                                }},
+                                {caption: 'No', callback: function() { md.close();  }}
+                ]
+            });
+        });
+        $("#regresarBtn").click(function() {
+            RegresarGrid();
+        });
+    });
+
+    function PostLista(){
+        model.nombreLista = $("#nombreLista").val();
+        model.fechaPresentacion = $("#fechaPresentacion").val();
+        model.numeroHombres = $("#numeroHombres").val();
+        model.numeroMujeres = $("#numeroMujeres").val();
+        model.numeroConstancias = $("#numeroConstancias").val();
+        model.nombreRepresentante = $("#nombreRepresentante").val();
+        $.ajax({
+            url: '@Url.Action("postLista", "TableroControl")',
+            type: 'POST',
+            data: {rawModel: JSON.stringify(model)},
+            beforeSend: function() {
+                //Show Dynamic Loader
+                $("body").dynamicSpinner({
+                    loadingText: "Guardando Lista"
+                });
+            },
+            success: function (result) {
+                //Remover Dynamic Loader
+                debugger;
+                $("body").dynamicSpinnerDestroy({});
+                consultarListas(RegresarGrid);
+            }
+        });
+    }
+
+    function RegresarGrid(){
+        $("#gridListasTitulo a").click();
+        $("html, body").animate({ scrollTop: 0 }, "fast");
+    }
+
+    function AsignarCampos(){
+        $("#nombreLista").val(model.nombreLista);
+        $("#fechaPresentacion").val(model.fechaPresentacion);
+        $("#numeroHombres").val( model.numeroHombres);
+        $("#numeroMujeres").val( model.numeroMujeres);
+        $("#numeroConstancias").val(model.numeroConstancias );
+        $("#nombreRepresentante").val(model.nombreRepresentante);
+    }
+</script>

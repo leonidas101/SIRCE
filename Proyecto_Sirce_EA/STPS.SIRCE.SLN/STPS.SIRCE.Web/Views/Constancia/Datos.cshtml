@@ -1,0 +1,299 @@
+﻿@model STPS.SIRCE.Web.Models.ConstanciaModel
+
+@{
+    ViewBag.Title = "Datos";
+    Layout = null;
+}
+<div class="modal-body">
+    <form id="formConstancia">
+        <div class="col-lg-12 form-group informative-fields">
+                <div class="col-lg-4 form-group">
+                    <label for="nombreLista">Nombre de la Lista:</label>
+                    <label id="nombreLista"></label>
+                </div>
+            <div class="col-lg-4 form-group informative-fields">
+                    <label for="fechaPresentacion">Fecha de Presentacion:</label>
+                    <label id="fechaPresentacion"></label>
+                </div>
+            <div class="col-lg-4 form-group informative-fields">
+                <label for="numeroConstancias">Número Máximo de Constancias:</label>
+                    <label id="numeroConstancias"></label>
+                </div>
+            </div>
+        <fieldset>
+            <legend>Campos obligatorios para agregar una constancia:</legend>
+            <div class="col-lg-12 form-group">
+                <div class="col-lg-5 form-group">
+                    <label for="trabajadores">*Trabajador:</label>
+                    <select data-placeholder="-Seleccionar Trabajador-" class="form-control" id="trabajadores" />
+                </div>
+                <div class="col-lg-5 form-group">
+                    <label for="cursos">*Curso:</label>
+                    <select data-placeholder="-Seleccionar Curso-" class="form-control" id="cursos" />
+                </div>
+                <div class="col-lg-2"> <button id="btnAgregar" type="button" class="btn btn-primary pull-left inline-button">Agregar Constancia</button></div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <div class="col-lg-12 line-separator"></div>
+            <div class="col-lg-12 form-group">
+                <div class="col-lg-12 form-group">
+                    <div class="col-lg-12 fix-Grid" id="gridConstanciasHtml"></div>
+                </div>
+            </div>
+            <div class="col-lg-12 line-separator"></div>
+        </fieldset>
+
+</form>
+</div>
+<div class="modal-footer">
+    @* Seccion de Botones*@
+    <div class="col-lg-12 fixOptionBtn">
+        <div class="col-lg-10"><button id="btnRegresar" type="button" class="btn btn-primary pull-right">Regresar</button></div>
+        <div class="col-lg-2"><button id="btnGuardar" type="button" class="btn btn-primary pull-right">Guardar</button></div>
+        <div class="col-lg-1"></div>
+    </div>
+</div>
+<script type="text/javascript">
+    //Modelo en Cache para llamadas posteriores a Servidor.
+    var model = @Html.Raw(Json.Encode(Model));
+
+    $(document).ready(function () {
+        debugger;
+        $("#nombreLista").text(model.lista.nombreLista);
+        $("#fechaPresentacion").text(model.lista.fechaPresentacion);
+        $("#numeroConstancias").text(model.lista.numeroConstancias );
+
+        $("#trabajadores").dynamicDropDown({
+            data: model.listaTrabajadores
+        });
+
+        $("#cursos").dynamicDropDown({
+            data: model.listaCursos
+        });
+
+        $("#gridConstanciasHtml").dynamicTable({
+            data: model.gridConstancias
+        });
+        
+        $("#btnAgregar").click(function(){
+            if ($('#trabajadores option:selected').val() == 0 || $('#trabajadores option:selected').val() == undefined) {
+                var md = $.Zebra_Dialog("¡Seleccione un trabajador!"
+                            ,{
+                                'type':     'information',
+                                'title':    'Confirmar Datos',
+                                'buttons':  [{caption: 'Cerrar', callback: function() { md.close();  }}
+                                ]
+                            });
+                $('#trabajadores').focus();
+                return false;
+            }
+
+            if ($('#cursos option:selected').val() == 0 || $('#cursos option:selected').val() == undefined) {
+                var md = $.Zebra_Dialog("¡Seleccione un curso!"
+                            ,{
+                                'type':     'information',
+                                'title':    'Confirmar Datos',
+                                'buttons':  [{caption: 'Cerrar', callback: function() { md.close();  }}
+                                ]
+                            });
+                $('#cursos').focus();
+                return false;
+            }
+
+            debugger;
+            //Obtengo los datos a validar, TrabajadorID y CentroTrabajoSIRCEID y 
+            var elementos = String($('#trabajadores option:selected').val()).split("|");
+            if (model.gridConstancias.datos !=  null)
+            {
+                //Valido que no exista el registro.
+                var selected = jQuery.grep(model.gridConstancias.datos, function(obj) { 
+                    return (obj.trabajadorID == elementos[0] && obj.cursoID  == $('#cursos').val() && obj.CentroTrabajoSIRCEID == elementos[1]); 
+                });
+
+                if (selected.length > 0)
+                {
+                    var md = $.Zebra_Dialog("¡Ya existe este curso para este trabajador y en este establecimiento!"
+                                ,{
+                                    'type':     'warning',
+                                    'title':    'Confirmar Datos',
+                                    'buttons':  [{caption: 'Cerrar', callback: function() { md.close();  }}
+                                    ]
+                                });
+                    return;
+                }
+            }
+
+            var constanciaTemporal = new Datos();
+
+            //Se construye el registro al modelo.gridNormasEspecialidades
+            constanciaTemporal.datos.ConstanciaID = $('#trabajadores option:selected').val() + "|" + elementos[1] + "|" + $('#cursos :selected').val(); //TrabajadorID|CentroTrabajoSIRCEID|CursoID
+            constanciaTemporal.datos.trabajadorID = elementos[0];
+            constanciaTemporal.datos.TrabajadorDescripcion = $('#trabajadores :selected').text();
+            constanciaTemporal.datos.cursoID = $('#cursos').val();
+            constanciaTemporal.datos.CursoDescripcion =  $('#cursos :selected').text();
+            constanciaTemporal.datos.CentroTrabajoSIRCEID = elementos[1];
+            constanciaTemporal.datos.Eliminado = false;
+
+            debugger;
+            //Se agrega item al modelo
+            model.gridConstancias.datos.push(constanciaTemporal.datos);
+
+            var selected = jQuery.grep(model.gridConstancias.datos, function(obj) { 
+                return (obj.Eliminado == false); 
+            });
+
+            model.gridConstancias.datos = selected;
+
+            //el nombre del control debe ser diferente al nombre del grid del modelo
+            $("#gridConstanciasHtml").dynamicTable({
+                data: model.gridConstancias
+            });
+
+            $('#trabajadores option:selected').prop('selected', false);
+            $('#trabajadores option[value=-0]').prop('selected', true);
+            $("#trabajadores").trigger("chosen:updated");
+
+            $('#cursos option:selected').prop('selected', false);
+            $('#cursos option[value=-0]').prop('selected', true);
+            $("#cursos").trigger("chosen:updated");
+
+            console.log(model);
+        });     
+        
+        $("#btnGuardar").click(function(){
+            if($("#formConstancia").validationEngine('validate',{promptPosition : "bottomRight"})){
+                $.ajax({
+                    url: '@Url.Action("CrearConstancia")',
+                    type: 'POST',
+                    data: {rawModel: JSON.stringify(model)},
+                    beforeSend: function() {
+                        $("body").dynamicSpinner({
+                            loadingText: "Guardando..."
+                        });
+                    },
+                    success: function (result) {
+                        //Remover Dynamic Loader
+                        $("body").dynamicSpinnerDestroy({});
+                        $("#gridConstanciasHtml .panel-body").html(result);
+                        $(".modal").modal('hide');
+                        $("body").removeClass('modal-open');
+                        consultarListas();
+                    }
+                });
+            }
+        });
+
+        $("#btnRegresar").click(function(){
+            $(".modal").modal('hide');
+            $("body").removeClass('modal-open');
+            consultarListas();
+        });
+    });
+
+    // Función para ejecutar una acción desde el grid.
+    function accionarClick(Accion){
+        debugger;
+        model.Accion = $(Accion).attr('Accion');
+        limpiarModelo();
+
+        if ($(".active").attr("value") == "0" || $(".active").attr("value") == undefined)
+        {
+            var md = $.Zebra_Dialog("¡Seleccione un registro valido para realizar esta acción!"
+                               ,{
+                                   'type':     'warning',
+                                   'title':    'Aviso Datos',
+                                   'buttons':  [{caption: 'Cerrar', callback: function() { md.close();  }}
+                                   ]
+                               });
+            return true;
+        }
+        var item = $(".active").attr("value"); //Elemento a buscar en el Grid y en la tabla [TrabajadorID|CentroTrabajoSIRCEID|CursoID]
+
+        if(model.Accion == $.grep(model.acciones, function(obj) { return obj.catalogoDescripcion == 'Eliminar'})[0].catalogoID)
+        {
+            var md = $.Zebra_Dialog("¿Esta seguro de eliminar el registro?"
+            ,{
+                'type':     'warning',
+                'title':    'Confirmar Datos',
+                'buttons':  [{caption: 'Sí', callback: function() { EliminarConstancia(item);  }},
+                             {caption: 'No', callback: function() { md.close();  }}
+                ]
+            });
+        }
+        console.log(model);
+    }
+
+    function GridConstancias()
+    {
+        this.gridConstancias = {
+            datos: []
+        }
+    }
+
+    function Datos()
+    {
+        this.datos = {
+            ConstanciaID : "",
+            trabajadorID : 0,
+            TrabajadorDescripcion : "",
+            cursoID : 0,
+            CursoDescripcion : "",
+            Eliminado : false,
+            CentroTrabajoSIRCEID : 0
+        }
+    }
+
+    function limpiarModelo()
+    {
+        model.constancia = null;
+        //model.gridConstancias = null;
+        model.listaConstancias = null;
+    }
+
+    function EliminarConstancia(item){
+        var constancias = new GridConstancias();
+        $(model.gridConstancias.datos).each(function (key, value) {
+            //Es un registro que ya existe en la BD, se debe de actualizar su estatus.
+            var constanciasTemporal = new Datos();
+
+            //Se construye el registro al modelo.gridConstancias
+            constanciasTemporal.datos.ConstanciaID = value.ConstanciaID;
+            constanciasTemporal.datos.trabajadorID = value.trabajadorID;
+            constanciasTemporal.datos.TrabajadorDescripcion = value.TrabajadorDescripcion;
+            constanciasTemporal.datos.cursoID = value.cursoID;
+            constanciasTemporal.datos.CursoDescripcion =  value.CursoDescripcion;
+            constanciasTemporal.datos.Eliminado = false;
+            constanciasTemporal.datos.CentroTrabajoSIRCEID = value.CentroTrabajoSIRCEID;
+            if (value.ConstanciaID == item)
+            {
+                constanciasTemporal.datos.Eliminado = true;
+            }
+            //Almaceno los registros temporalmente.
+            constancias.gridConstancias.datos.push(constanciasTemporal.datos);
+        });
+
+        var selected = jQuery.grep(constancias.gridConstancias.datos, function(obj) { 
+            return obj.Eliminado == false; 
+        });
+
+        //Debo de asignar los valores en el objecto model.gridNormasEspecialidades.datos
+        model.gridConstancias.datos = selected;
+
+        //el nombre del control debe ser diferente al nombre del grid del modelo
+        $("#gridConstanciasHtml").dynamicTable({
+            data: model.gridConstancias
+        });
+
+        $('#trabajadores option:selected').prop('selected', false);
+        $('#trabajadores option[value=-0]').prop('selected', true);
+        $("#trabajadores").trigger("chosen:updated");
+
+        $('#cursos option:selected').prop('selected', false);
+        $('#cursos option[value=-0]').prop('selected', true);
+        $("#cursos").trigger("chosen:updated");
+            
+        console.log(model);    
+    }    
+
+</script>

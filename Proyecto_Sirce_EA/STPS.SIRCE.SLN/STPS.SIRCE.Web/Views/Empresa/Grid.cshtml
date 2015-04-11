@@ -1,0 +1,69 @@
+﻿@model STPS.SIRCE.Web.Models.EmpresaModel
+@{
+    ViewBag.Title = "Grid";
+    Layout = null;
+}
+
+
+<div class="col-lg-12 fix-Grid" id="gridRegion"></div>
+@* Seccion de Botones*@
+<div class="col-lg-12 fixOptionBtn">
+    <div class="col-lg-10"><button id="regresarFiltros" type="button" class="btn btn-primary pull-right">Regresar</button></div>
+    <div class="col-lg-2"><button id="seleccionarEmpresa" type="button" class="btn btn-primary pull-right ">Seleccionar Empresa</button></div>
+    <div class="col-lg-12"><label id="labelEmpresa" class="label label-info pull-right hidden" style="position:relative; z-index:1000000000;"></label></div>
+</div>
+
+<script type="text/javascript">
+    //Modelo en Cache para llamadas posteriores a Servidor.
+    var model = @Html.Raw(Json.Encode(Model));
+    $(document).ready(function () {
+        $("#gridRegion").dynamicTable({
+            data: model.gridEmpresas
+        });
+        //Wipe Grid de Empresas
+        model.gridEmpresas= null;
+        console.log(model);
+        $("#regresarFiltros").click(function(){
+            $("#filtrosEmpresasTitulo a").click();
+            $("html, body").animate({ scrollTop: 0 }, "fast");
+        });
+        $("#seleccionarEmpresa").click(function(){
+            if($(".active").attr('value')!=undefined){
+                //Asigna el ID de la Empresa DNE Seleccionada
+                model.empresa.empresaID = $(".active").attr('value');
+                $.ajax({
+                    url: '@Url.Action("SeleccionaEmpresa")',
+                    type: 'POST',
+                    data: {rawModel: JSON.stringify(model)},
+                    beforeSend: function() {
+                        $("body").dynamicSpinner({
+                            loadingText: "Cargando Empresas"
+                        });
+                    },
+                    success: function (result) {
+                        //Remover Dynamic Loader
+                        $("body").dynamicSpinnerDestroy({});
+                        debugger;
+                        $(".active tr").val();
+                        $("#seleccionarEmpresa").text('Cargando..');
+                        $("#seleccionarEmpresa").attr('disabled', 'disabled');
+                        $("#labelEmpresa").text($(".active td")[0].innerText);
+                        $("#labelEmpresa").removeClass('hidden');
+                        $("#liEmpresa a").text($("#labelEmpresa").text());
+                        $("#liEmpresa a").append("<i class='fa fa-reply'></i>");
+                        $("#labelEmpresa").animate({'top':'-510', 'left':'60', 'fontSize' : '15px'},
+                        {easing: 'swing',
+                            duration: 1900,
+                            complete: function(){
+                                $("#labelEmpresa").addClass('hidden');
+                                $("#userBadge").text('2');
+                                $("#liEmpresa").removeClass('hidden');
+                            }
+                        });
+                        window.setTimeout(function () {$(".body-content").html(result)}, 1900);
+                    }
+                });
+            }
+        });
+    });
+</script>

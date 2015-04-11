@@ -1,0 +1,76 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "STPS.SIRCE.Web", "STPS.SIRCE.WEB\STPS.SIRCE.Web.csproj", "{E1384F02-BA43-479A-8F2F-75E866650DB9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "STPS.SIRCE.WEB.Tests", "STPS.SIRCE.WEB.Tests\STPS.SIRCE.WEB.Tests.csproj", "{7D9BD9C4-EF32-4DF1-A4A7-AEA07C10797E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "STPS.SIRCE.Negocio", "STPS.SIRCE.NEGOCIO\STPS.SIRCE.Negocio.csproj", "{EA6FAA71-75BD-4AFD-8061-F2BF33BDD012}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "STPS.SIRCE.Datos", "STPS.SIRCE.Datos\STPS.SIRCE.Datos.csproj", "{CEA6ED55-3947-48D9-8EBD-487C8B8D87E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "STPS.SIRCE.Entidades", "STPS.SIRCE.ENTIDADES\STPS.SIRCE.Entidades.csproj", "{B502D6BD-4F75-4734-AAC9-84FC9250453B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "STPS.Framework", "STPS.Framework\STPS.Framework.csproj", "{E579F00B-CC73-449C-BCA4-278D394918BC}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 7
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://x1mexico.visualstudio.com/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = STPS.Framework\\STPS.Framework.csproj
+		SccProjectName1 = STPS.Framework
+		SccLocalPath1 = STPS.Framework
+		SccProjectUniqueName2 = STPS.SIRCE.Datos\\STPS.SIRCE.Datos.csproj
+		SccProjectName2 = STPS.SIRCE.Datos
+		SccLocalPath2 = STPS.SIRCE.Datos
+		SccProjectUniqueName3 = STPS.SIRCE.ENTIDADES\\STPS.SIRCE.Entidades.csproj
+		SccProjectName3 = STPS.SIRCE.ENTIDADES
+		SccLocalPath3 = STPS.SIRCE.ENTIDADES
+		SccProjectUniqueName4 = STPS.SIRCE.NEGOCIO\\STPS.SIRCE.Negocio.csproj
+		SccProjectName4 = STPS.SIRCE.NEGOCIO
+		SccLocalPath4 = STPS.SIRCE.NEGOCIO
+		SccProjectUniqueName5 = STPS.SIRCE.WEB.Tests\\STPS.SIRCE.WEB.Tests.csproj
+		SccProjectName5 = STPS.SIRCE.WEB.Tests
+		SccLocalPath5 = STPS.SIRCE.WEB.Tests
+		SccProjectUniqueName6 = STPS.SIRCE.WEB\\STPS.SIRCE.Web.csproj
+		SccProjectName6 = STPS.SIRCE.WEB
+		SccLocalPath6 = STPS.SIRCE.WEB
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E1384F02-BA43-479A-8F2F-75E866650DB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1384F02-BA43-479A-8F2F-75E866650DB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1384F02-BA43-479A-8F2F-75E866650DB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1384F02-BA43-479A-8F2F-75E866650DB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D9BD9C4-EF32-4DF1-A4A7-AEA07C10797E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D9BD9C4-EF32-4DF1-A4A7-AEA07C10797E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D9BD9C4-EF32-4DF1-A4A7-AEA07C10797E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D9BD9C4-EF32-4DF1-A4A7-AEA07C10797E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA6FAA71-75BD-4AFD-8061-F2BF33BDD012}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA6FAA71-75BD-4AFD-8061-F2BF33BDD012}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA6FAA71-75BD-4AFD-8061-F2BF33BDD012}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA6FAA71-75BD-4AFD-8061-F2BF33BDD012}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CEA6ED55-3947-48D9-8EBD-487C8B8D87E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CEA6ED55-3947-48D9-8EBD-487C8B8D87E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CEA6ED55-3947-48D9-8EBD-487C8B8D87E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CEA6ED55-3947-48D9-8EBD-487C8B8D87E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B502D6BD-4F75-4734-AAC9-84FC9250453B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B502D6BD-4F75-4734-AAC9-84FC9250453B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B502D6BD-4F75-4734-AAC9-84FC9250453B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B502D6BD-4F75-4734-AAC9-84FC9250453B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E579F00B-CC73-449C-BCA4-278D394918BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E579F00B-CC73-449C-BCA4-278D394918BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E579F00B-CC73-449C-BCA4-278D394918BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E579F00B-CC73-449C-BCA4-278D394918BC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

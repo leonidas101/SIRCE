@@ -1,0 +1,190 @@
+﻿@model STPS.SIRCE.Web.Models.CursoModel
+
+@{
+    ViewBag.Title = "Cursos";
+    Layout = null;
+}
+
+<form id="formCurso">
+    <fieldset>
+        <legend>Información del curso</legend>
+        <div class="col-lg-12 form-group">
+
+            @* Primer Renglon de Datos *@
+
+            <div class="col-lg-4 form-group">
+                <label for="nombre">Nombre del curso:</label>
+                <input type="text" maxlength="150" class="validate[required] form-control"  id="nombre" placeholder="Nombre del curso" />
+            </div>
+
+            <div class="col-lg-4 form-group">
+                <label for="duracion">Duración (hrs):</label>
+                <input type="text" class="validate[required] form-control" id="duracion" placeholder="Duración (hrs)" required />
+            </div>
+
+            <div class="col-lg-4 form-group">
+                <label for="areaTematica">Area temática del curso:</label>
+                <select data-placeholder="-Seleccionar-" id="areaTematica" class="validate[required]" />
+            </div>
+
+            <div class="col-lg-4 form-group">
+                <label for="tipoAgente">Tipo de agente capacitador:</label>
+                <select data-placeholder="-Seleccionar-" class="form-control" id="tipoAgente" />
+            </div>
+
+            <div class="col-lg-4 form-group">
+                <label for="objetivoCapacitacion">Objetivo de la capacitación:</label>
+                <select data-placeholder="-Seleccionar-" class="form-control" id="objetivoCapacitacion" />
+            </div>
+
+            <div class="col-lg-4 form-group">
+                <label for="modalidadCapacitacion">Modalidad de la capacitación:</label>
+                <select data-placeholder="-Seleccionar-" class="form-control" id="modalidadCapacitacion" />
+            </div>
+
+            <div class="col-lg-4 form-group">
+                <label for="fechaInicio">Fecha de inicio:</label>
+                <input type="text" class="validate[required] form-control" id="fechaInicio" />
+            </div>
+
+            <div class="col-lg-4 form-group">
+                <label for="fechaTermino">Fecha de término:</label>
+                <input type="text" class="validate[required] form-control" id="fechaTermino" />
+            </div>
+
+            <div class="col-lg-4 form-group">
+                <label for="registroAgente">No. de registro del agente capacitador externo (STPS):</label>
+                <input type="text" class="validate[required] form-control" id="registroAgente" maxlength="18" placeholder="No. de registro del agente capacitador externo (STPS)" required />
+            </div>
+
+        </div>
+    </fieldset>
+</form>
+@* Seccion de Botones*@
+<div class="col-lg-12 fixOptionBtn">
+    <div class="col-lg-9"><button id="btnRegresar" type="button" class="btn btn-primary pull-right">Regresar</button></div>
+    <div class="col-lg-2"><button id="btnGuardar" type="button" class="btn btn-primary pull-right">Guardar</button></div>
+    <div class="col-lg-2"></div>
+    </div>
+
+<script type="text/javascript">
+
+    //Modelo en Cache para llamadas posteriores a Servidor.
+    var model = @Html.Raw(Json.Encode(Model));
+
+    $(document).ready(function () {
+
+
+        //Fix Temporal Dynamic DropDown
+        $("#datosCurso .panel-body").height(($(".body-content").height()) * (1.2));
+
+        $("#areaTematica").dynamicDropDown({
+            data: model.areas
+        });
+
+        $("#tipoAgente").dynamicDropDown({
+            data: model.tiposAgentes
+        });
+
+        $("#objetivoCapacitacion").dynamicDropDown({
+            data: model.objetivos
+        });
+
+        $("#modalidadCapacitacion").dynamicDropDown({
+            data: model.modalidades
+        });
+
+        $("#fechaInicio").dynamicCalendar({});
+
+        $("#fechaTermino").dynamicCalendar({});
+
+        // Ahora Colocamos los valores del Curso en los controles
+
+
+        if(model.Accion == $.grep(model.acciones, function(obj) { return obj.catalogoDescripcion == 'Editar'})[0].catalogoID || model.Accion == $.grep(model.acciones, function(obj) { return obj.catalogoDescripcion == 'Consultar'})[0].catalogoID)
+        {
+            $("#nombre").val(model.nombre);
+            $("#duracion").val(model.duracion);
+            $("#fechaInicio").val(model.fechaInicio);
+            $("#fechaTermino").val(model.fechaTermino);
+            $("#registroAgente").val(model.numeroRegistroAgente);
+
+            $("#areaTematica").val(model.areaId);
+            $("#tipoAgente").val(model.tipoId);
+            $("#objetivoCapacitacion").val(model.modalidadId);
+            $("#modalidadCapacitacion").val(model.objetivoId);
+
+            $("#areaTematica").trigger("chosen:updated");
+            $("#tipoAgente").trigger("chosen:updated");
+            $("#objetivoCapacitacion").trigger("chosen:updated");
+            $("#modalidadCapacitacion").trigger("chosen:updated");
+
+            if(model.Accion == $.grep(model.acciones, function(obj) { return obj.catalogoDescripcion == 'Consultar'})[0].catalogoID)
+                $("#formCurso").dynamicLock({});
+        }
+
+        $("#btnRegresar").click(function (){
+            RegresarGrid();
+        });
+
+        // Se concatena el nombre del panel o área de la vista index con el string "Titulo", ejemplo: "nombrePanelTitulo"
+        $("#datosCursoTitulo a").click();
+
+        
+        $("#btnGuardar").click(function(){
+            if($("#formCurso").validationEngine('validate',{promptPosition : "bottomRight"})){
+                // Obtenemos los valores de los controles
+                model.nombre = ($.trim($("#nombre").val())!='') ? $("#nombre").val() : null;
+                model.duracion = ($.trim($("#duracion").val())!='') ? $("#duracion").val() : null;
+                model.fechaInicio = ($.trim($("#fechaInicio").val())!='') ? $("#fechaInicio").val() : null;
+                model.fechaTermino = ($.trim($("#fechaTermino").val())!='') ? $("#fechaTermino").val() : null;
+                model.numeroRegistroAgente = ($.trim($("#registroAgente").val())!='') ? $("#registroAgente").val() : null;
+                model.areaId =($("#areaTematica").val() != 0) ? $("#areaTematica").val()  : null;
+                model.tipoId =($("#tipoAgente").val() != 0) ? $("#tipoAgente").val()  : null;
+                model.modalidadId =($("#objetivoCapacitacion").val() != 0) ? $("#objetivoCapacitacion").val()  : null;
+                model.objetivoId =($("#modalidadCapacitacion").val() != 0) ? $("#modalidadCapacitacion").val()  : null;
+
+                console.log(model);
+
+                $.ajax({
+                    url: '@Url.Action("GuardarEntidad")',
+                    type: 'POST',
+                    data: {rawModel: JSON.stringify(model)},
+                    beforeSend: function() {
+                        $("body").dynamicSpinner({
+                            loadingText: "Guardando..."
+                        });
+                    },
+                    success: function (result) {
+                        //Remover Dynamic Loader
+                        $("body").dynamicSpinnerDestroy({});
+
+                        $.ajax({
+                            url: '@Url.Action("Grid")',
+                            type: 'GET',
+                            data: null,
+                            beforeSend: function () {
+                                $("body").dynamicSpinner({
+                                    loadingText: "Cargando Cursos"
+                                });
+                            },
+                            success: function (result) {
+
+                                $("#gridCursosTitulo a").click();
+                                $("body").dynamicSpinnerDestroy({});
+                                $("#gridCursos .panel-body").html(result);
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
+    });
+
+
+    function RegresarGrid(){
+        $("#gridCursosTitulo a").click();
+        $("html, body").animate({ scrollTop: 0 }, "fast");
+    }
+</script>

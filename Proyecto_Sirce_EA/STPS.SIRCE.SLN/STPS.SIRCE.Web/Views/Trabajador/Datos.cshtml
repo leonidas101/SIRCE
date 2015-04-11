@@ -1,0 +1,504 @@
+﻿@model STPS.SIRCE.Web.Models.TrabajadorModel
+
+@{
+    ViewBag.Title = "Trabajadores";
+    Layout = null;
+}
+<form id="camposRequeridos">
+    <fieldset>
+        <legend>Campos obligatorios (*)</legend>
+        @* Datos Requeridos *@
+
+        <div class="col-lg-4 form-group">
+            <label for="CURP"><span class="badge pull-left">1</span>&nbsp;  CURP del trabajador*:</label>
+            <input type="text" maxlength="18" class="validate[required] form-control" id="curp" placeholder="CURP del trabajador" required />
+        </div>
+
+        <div class="col-lg-4 form-group">
+            <label for="nombre"><span class="badge pull-left">2</span>&nbsp;  Nombre del trabajador*:</label>
+            <input type="text" maxlength="50" class="validate[required] form-control" id="nombre" placeholder="Nombre del trabajador" required />
+        </div>
+
+        <div class="col-lg-4 form-group">
+            <label for="apellidoPaterno"><span class="badge pull-left">3</span>&nbsp;  Apellido Paterno*:</label>
+            <input type="text" maxlength="50" class="validate[required] form-control" id="apellidoPaterno" placeholder="Apellido Paterno" required />
+        </div>
+
+        <div class="col-lg-4 form-group">
+            <label for="apellidoMaterno"><span class="badge pull-left">4</span>&nbsp;  Apellido Materno*:</label>
+            <input type="text" maxlength="50" class="validate[required] form-control" id="apellidoMaterno" placeholder="Apellido Materno" required />
+        </div>
+
+        <div class="col-lg-4 form-group">
+            <label for="ocupaciones"><span class="badge pull-left">5</span>&nbsp;  Ocupación Específica*:</label>
+            <select data-placeholder="-Seleccionar Ocupación-" class="validate[required,funcCall[checkSelect]] form-control" id="ocupaciones" />
+        </div>
+
+        <div class="col-lg-4 form-group">
+            <label for="entidad"><span class="badge pull-left">6</span>&nbsp;  Entidad Federativa*:</label>
+            <select data-placeholder="-Seleccionar Entidad-" class="validate[required,funcCall[checkSelect]] form-control" id="entidad" />
+        </div>
+
+        <div class="col-lg-4 form-group">
+            <label for="municipio"><span class="badge pull-left">7</span>&nbsp;  Delegacion/Municipio*:</label>
+            <select data-placeholder="-Seleccionar Delegacion/Municipio-" class="validate[required,funcCall[checkSelect]] form-control" id="municipio" />
+        </div>
+    </fieldset>
+</form>
+
+<form id="camposOpcionales">
+    <fieldset>
+        <legend>Campos Opcionales:</legend>
+        @* Datos Opcionales *@
+        <div class="col-lg-4 form-group">
+            <label for="Escolaridad"><span class="badge pull-left">O</span>&nbsp; Nivel Máximo de Estudios:</label>
+            <select data-placeholder="-Seleccionar Escolaridad-" class="form-control" id="escolaridad" />
+        </div>
+
+        <div class="col-lg-4 form-group">
+            <label for="InstitucionEducativa"><span class="badge pull-left">O</span>&nbsp; Institución Educativa:</label>
+            <select data-placeholder="-Seleccionar Instituciom Educativa-" class="form-control" id="institucionEducativa" />
+        </div>
+
+        <div class="col-lg-4 form-group">
+            <label for="DocumentosProbatorios"><span class="badge pull-left">O</span>&nbsp; Documentos Probatorio:</label>
+            <select data-placeholder="-Seleccionar DocumentosProbatorio-" class="form-control" id="documentosProbatorios" />
+        </div>
+    </fieldset>
+    <fieldset id="camposNorma">
+        <legend>Normas para el trabajador:</legend>
+        @* Datos Opcionales *@
+        @* Aqui va el grid de la normas *@
+        <div class="col-lg-8 form-group">
+            <label for="NormasC"><span class="badge pull-left">1</span>&nbsp; Norma o Estandar:</label>
+            <select data-placeholder="-Seleccionar Norma/Estandar-" class="validate[required,funcCall[checkSelect]] form-control" id="normasC" />
+        </div>
+        <div class="col-lg-4 form-group">
+            <label for="FechaEmisionCertificado"><span class="badge pull-left">2</span>&nbsp; Fecha de emisión del certificado:</label>
+            <input type="text" class="validate[required] form-control" id="fechaEmisionCertificado" />
+        </div>
+        <div class="col-lg-11">
+            <button id="btnAgregar" type="button" class="btn btn-primary pull-right"><span class="badge pull-left">3</span>Agregar</button>
+        </div>
+        <div class="col-lg-1"></div>
+
+    </fieldset>
+    <div class="col-lg-12 line-separator"></div>
+    <fieldset>
+        <div class="col-lg-12 fix-Grid">
+            <div class="col-lg-12" id="gridNormas"></div>
+        </div>
+    </fieldset>
+</form>
+<div class="col-lg-12 line-separator"></div>
+        @* Seccion de Botones*@
+        <div class="col-lg-12 fixOptionBtn">
+            <div class="col-lg-10"><button id="regresarBtn" type="button" class="btn btn-primary pull-right">Regresar</button></div>
+            <div class="col-lg-2"><button id="btnGuardar" type="button" class="btn btn-primary pull-right">Guardar</button></div>
+            <div class="col-lg-1"></div>
+        </div>
+
+<script type="text/javascript">
+    //Modelo en Cache para llamadas posteriores a Servidor.
+    var model = @Html.Raw(Json.Encode(Model));
+
+    $(document).ready(function () {
+        var legend = '';
+        var type = 'question';
+        $("#ocupaciones").dynamicDropDown({
+            data: model.ocupaciones
+        });
+
+        $("#entidad").dynamicDropDown({
+            data: model.entidadesFederativas
+        });
+
+        $("#escolaridad").dynamicDropDown({
+            data: model.escolaridades
+        });
+
+        $("#institucionEducativa").dynamicDropDown({
+            data: model.institucioEducativas
+        });
+
+        $("#documentosProbatorios").dynamicDropDown({
+            data: model.documentosProbatorios
+        });
+
+        $("#normasC").dynamicDropDown({
+            data: model.normasCompetencia
+        });
+
+        $("#normasC_chosen").css("width", "92%");
+
+        $("#fechaEmisionCertificado").dynamicCalendar({});
+
+        $("#regresarBtn").click(function() {
+            RegresarGrid();
+        });
+
+        if(model.accion != $.grep(model.acciones, function(obj) { return obj.catalogoDescripcion == 'Crear'})[0].catalogoID)
+        {
+            $("#municipio").dynamicDropDown({
+                data: model.municipios
+            });
+            $("#curp").val(model.curp);
+            $("#curp").attr('disabled', 'disabled');
+            $("#nombre").val(model.nombre);
+            $("#apellidoPaterno").val(model.apellidoPaterno);
+            $("#apellidoMaterno").val(model.apellidoMaterno);
+            $("#ocupaciones").val(model.ocupacionID);
+            $("#entidad").val(model.entidadFederativaID);
+            $("#municipio").val(model.municipioID);
+
+            $("#escolaridad").val(model.escolaridadID);
+            $("#institucionEducativa").val(model.institucionesEducativasID);
+            $("#documentosProbatorios").val(model.comprobanteEstudioID);
+
+            $("#escolaridad").trigger("chosen:updated");
+            $("#institucionEducativa").trigger("chosen:updated");
+            $("#documentosProbatorios").trigger("chosen:updated");
+
+            $("#ocupaciones").trigger("chosen:updated");
+            $("#entidad").trigger("chosen:updated");
+            $("#municipio").trigger("chosen:updated");
+
+            //el nombre del control debe ser diferente al nombre del grid del modelo
+            $("#gridNormas").dynamicTable({
+                data: model.gridNormasEspecialidades
+            });
+
+            if(model.accion == $.grep(model.acciones, function(obj) { return obj.catalogoDescripcion == 'Consultar'})[0].catalogoID)
+            {
+                $("#camposRequeridos").dynamicLock({});
+                $("#camposOpcionales").dynamicLock({});
+                $("#btnGuardar").hide();
+                $("#camposNorma").hide();
+                $("#gridNormas .btn").hide();
+            }
+            else if(model.accion == $.grep(model.acciones, function(obj) { return obj.catalogoDescripcion == 'Editar'})[0].catalogoID){
+                legend = '¿Desea editar los datos del trabajador ' + $("#nombre").val() + ' ' + $("#apellidoPaterno").val() + ' ' + $("#apellidoMaterno").val() + '?';
+            }
+            else if (model.accion == $.grep(model.acciones, function(obj) { return obj.catalogoDescripcion == 'Eliminar'})[0].catalogoID){
+                legend = '¿Desea eliminar al trabajador ' + $("#nombre").val() + ' ' + $("#apellidoPaterno").val() + ' ' + $("#apellidoMaterno").val() + '?';
+                type='warning';
+                $("#btnGuardar").text("Eliminar Trabajador");
+                $("#camposRequeridos").dynamicLock({});
+                $("#camposOpcionales").dynamicLock({});
+                $("#camposNorma").hide();
+                $("#gridNormas .btn").hide();
+            }
+        }
+        else{
+            legend = '¿Desea guardar al trabajador ' + $("#nombre").val() + ' ' + $("#apellidoPaterno").val() + ' ' + $("#apellidoMaterno").val() + '?';
+        }
+
+        
+        $("#btnGuardar").click(function(){
+            var md = $.Zebra_Dialog(legend
+                                ,{
+                                    'type':     type,
+                                    'title':    'Confirmar Datos',
+                                    'buttons':  [
+                                                    {caption: 'Sí', callback: function() {
+                                                        PostTrabajador(); 
+                                                    }},
+                                                    {caption: 'No', callback: function() { md.close();  }}
+                                    ]
+                                });
+        });
+        $("#datosTrabajadorTitulo a").click();
+    });
+
+    //Se habilita evento para cargar Municipios al Seleccionar una Entidad
+    $("#entidad").chosen().change(function (event) {
+        if($("#municipio_chosen").length)
+            $("#municipio").dynamicDropDownDestroy({});
+        if ($("#entidad").val() != 0) {            
+            model.EntidadFederativaID = $("#entidad").val();
+            $.ajax({
+                url: '@Url.Action("ConsultarMunicipiosTrabajador")',
+                type: 'POST',
+                data: {rawModel: JSON.stringify(model)},
+                dataType: 'json',
+                //Mostrar Dynamic Loader
+                beforeSend: function() {
+                    $("body").dynamicSpinner({
+                        loadingText: "Cargando Municipios"
+                    });
+                },
+                success: function (myModel) {
+                    //Remover Dynamic Loader
+                    $("body").dynamicSpinnerDestroy({});
+                    model = myModel;
+                    $("#municipio").dynamicDropDown({
+                        data: model.municipios
+                    });
+                }
+            });
+        }        
+    });
+
+    //Se habilita evento para cargar Municipios al Seleccionar una Entidad
+    $("#escolaridad").chosen().change(function (event) {
+        var selected;
+        if ($("#escolaridad").val() != 0) {
+            if ($("#escolaridad").val() >= 4)                                   //Título, Certificado, Diploma u Otros
+            {
+                selected = jQuery.grep(model.documentosProbatorios, function(obj) { 
+                    return (obj.catalogoID >= 1 && obj.catalogoID <= 3);
+                });
+            }
+            if ($("#escolaridad").val() == 3)                                   //Certificado, Diploma u Otros
+            {
+                selected = jQuery.grep(model.documentosProbatorios, function(obj) { 
+                    return (obj.catalogoID >= 2 && obj.catalogoID <= 4);
+                });
+            }
+            if ($("#escolaridad").val() == 2 || $("#escolaridad").val() == 1)   //Primaria o Secundaria
+            {
+                selected = jQuery.grep(model.documentosProbatorios, function(obj) { 
+                    return (obj.catalogoID == 2);
+                });
+            }
+
+            $("#institucionEducativa").dynamicDropDownDestroy({});
+            $("#dcumentosProbatorios").dynamicDropDownDestroy({});
+
+            $("#institucionEducativa").dynamicDropDown({
+                data: model.institucioEducativas
+            });
+
+            $("#documentosProbatorios").dynamicDropDown({
+                data: selected
+            });
+
+            $("#institucionEducativa").trigger("chosen:updated");
+            $("#documentosProbatorios").trigger("chosen:updated");
+        }
+        else
+        {
+            $("#institucionEducativa").dynamicDropDownDestroy({});
+            $("#documentosProbatorios").dynamicDropDownDestroy({});
+        }            
+    });
+
+    function PostTrabajador(){
+                if($("#camposRequeridos").validationEngine('validate',{validateNonVisibleFields: true, promptPosition : "bottomRight"})){
+                    model.curp = $.trim($("#curp").val());
+                    model.nombre = $.trim($("#nombre").val());
+                    model.apellidoPaterno = $.trim($("#apellidoPaterno").val());
+                    model.apellidoMaterno = $.trim($("#apellidoMaterno").val());
+                    model.ocupacionID = $("#ocupaciones").val();
+                    model.entidadFederativaID = $("#entidad").val();
+                    model.municipioID = $("#municipio").val();
+                    model.escolaridadID = ($("#escolaridad").val() != 0 ? $("#escolaridad").val()  : null);
+                    model.institucionesEducativasID = ($("#institucionEducativa").val() != 0 ? $("#institucionEducativa").val()  : null);
+                    model.comprobanteEstudioID = ($("#documentosProbatorios").val() != 0 ? $("#documentosProbatorios").val()  : null);
+
+                    $.ajax({
+                        url: '@Url.Action("PostTrabajador")',
+                        type: 'POST',
+                        data: {rawModel: JSON.stringify(model)},
+                        beforeSend: function() {
+                            $("body").dynamicSpinner({
+                                loadingText: "Guardando..."
+                            });
+                        },
+                        success: function (result) {
+                            //Remover Dynamic Loader
+                            $("body").dynamicSpinnerDestroy({});
+                            consultarTrabajadores(RegresarGrid);
+                        }
+                    });
+                }
+    }
+
+    // Función para ejecutar una acción desde el grid.
+    function AccionarNormasClick(accion){
+        model.accion =  $(accion).attr('Accion');
+
+        if ($(".active").attr("value") == 0 || $(".active").attr("value") == undefined)
+        {
+            alert("Seleccione un registro valido para realizar la acción");
+            return true;
+        }
+        var item = $(".active").attr("value"); //Elemento a buscar en el Grid y la tabla
+
+        if(parseInt(model.accion) == $.grep(model.acciones, function(obj) { return obj.catalogoDescripcion == 'Editar'})[0].catalogoID)
+        {
+            var valor = confirm("¿Esta seguro de eliminar el registro?");
+
+            if (valor != true)
+                return false;
+
+            var normas = new GridNormasEspecialidades();
+
+            debugger;
+            $(model.gridNormasEspecialidades.datos).each(function (key, value) {
+                //Es un registro que ya existe en la BD, se debe de actualizar su estatus.
+                var normasTemporal = new Datos();
+                //Se construye el registro al modelo.gridNormasEspecialidades
+                normasTemporal.datos.NormaTrabajadorID = value.NormaTrabajadorID;
+                normasTemporal.datos.TrabajadorID = value.TrabajadorID;
+                normasTemporal.datos.NormaCompetenciaID = value.NormaCompetenciaID;
+                normasTemporal.datos.FechaEmision = value.FechaEmision;
+                normasTemporal.datos.NormaCompetenciaDescripcion =  value.NormaCompetenciaDescripcion;
+                normasTemporal.datos.Eliminado = false;
+                if (value.NormaCompetenciaID == item)
+                {
+                    normasTemporal.datos.Eliminado = true;
+                }
+                //Almaceno los registros temporalmente.
+                normas.gridNormasEspecialidades.datos.push(normasTemporal.datos);
+            });
+
+            var selected = jQuery.grep(normas.gridNormasEspecialidades.datos, function(obj) { 
+                return obj.Eliminado == false; 
+            });
+
+            //Debo de asignar los valores en el objecto model.gridNormasEspecialidades.datos
+            model.gridNormasEspecialidades.datos = selected;
+
+            //el nombre del control debe ser diferente al nombre del grid del modelo
+            $("#gridNormas").dynamicTable({
+                data: model.gridNormasEspecialidades
+            });
+
+            $('#normasC option:selected').prop('selected', false);
+            $('#normasC option[value=-0]').prop('selected', true);
+            $("#normasC").trigger("chosen:updated");
+            $('#fechaEmisionCertificado').val('');
+        }
+        console.log(model);
+        return;
+    }
+
+    function GridNormasEspecialidades()
+    {
+        this.gridNormasEspecialidades = {
+            datos: []
+        }
+    }
+
+    function RegresarGrid(){
+        $("#gridTrabajadoresTitulo a").click();
+        $("html, body").animate({ scrollTop: 0 }, "fast");
+    }
+
+    function Datos()
+    {
+        this.datos = {
+            NormaTrabajadorID : 0,
+            TrabajadorID : 0,
+            NormaCompetenciaID : 0,
+            FechaEmision : "",
+            NormaCompetenciaDescripcion: "",
+            Eliminado : false
+        }
+    }   
+
+    $("#btnAgregar").click(function(){
+        if($("#camposOpcionales").validationEngine('validate',{validateNonVisibleFields: true, promptPosition : "bottomRight"})){
+            if (model.gridNormasEspecialidades.datos !=  null)
+            {
+                var selected = jQuery.grep(model.gridNormasEspecialidades.datos, function(obj) { 
+                    return (obj.NormaCompetenciaID == $('#NormasC').val()); 
+                });
+
+                if (selected.length > 0)
+                {
+                    alert("Ya existe la norma o estandard, seleccionada");
+                    return;
+                }
+            }
+
+            var normasTemporal = new Datos();
+
+            //Se construye el registro al modelo.gridNormasEspecialidades
+            normasTemporal.datos.NormaTrabajadorID = 0;
+            normasTemporal.datos.TrabajadorID = model.TrabajadorID;
+            normasTemporal.datos.NormaCompetenciaID = parseInt($('#normasC').val());
+            normasTemporal.datos.FechaEmision = $('#fechaEmisionCertificado').val();
+            normasTemporal.datos.NormaCompetenciaDescripcion =  $('#normasC :selected').text();
+            normasTemporal.datos.Eliminado = false;
+
+            debugger;
+            //Se agrega item al modelo
+            model.gridNormasEspecialidades.datos.push(normasTemporal.datos);
+
+            var selected = jQuery.grep(model.gridNormasEspecialidades.datos, function(obj) { 
+                return (obj.Eliminado == false); 
+            });
+
+            model.gridNormasEspecialidades.datos = selected;
+
+            //el nombre del control debe ser diferente al nombre del grid del modelo
+            $("#gridNormas").dynamicTable({
+                data: model.gridNormasEspecialidades
+            });
+
+            $('#normasC option:selected').prop('selected', false);
+            $('#normasC option[value=-0]').prop('selected', true);
+            $("#normasC").trigger("chosen:updated");
+            $('#fechaEmisionCertificado').val('');
+        }
+    });
+
+    $("#curp").on('blur', function() {
+        debugger;
+
+        if ($("#curp").val().length > 0) {
+
+            if (!($.trim($("#curp").val()).match(/^[A-Z]{1}[AEIOU]{1}[A-Z]{2}[0-9]{2}(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[HM]{1}(AS|BC|BS|CC|CS|CH|CL|CM|DF|DG|GT|GR|HG|JC|MC|MN|MS|NT|NL|OC|PL|QT|QR|SP|SL|SR|TC|TS|TL|VZ|YN|ZS|NE)[B-DF-HJ-NP-TV-Z]{3}[0-9A-Z]{1}[0-9]{1}$/)))
+            {
+                alert("El CURP es Incorrecto");
+                $("#curp").focus();
+                return true;
+            }
+
+            model.curp = $("#curp").val();  
+            $.ajax({
+                url: '@Url.Action("VerificaCURP")',
+                type: 'POST',
+                data: {rawModel: JSON.stringify(model)},
+                dataType: 'json',
+                //Mostrar Dynamic Loader
+                beforeSend: function() {
+                    $("body").dynamicSpinner({
+                        loadingText: "Verificando CURP"
+                    });
+                },
+                success: function (myModel) {
+                    model.curp = "";
+                    if (myModel.verificaCURP == true > 0)
+                    {
+                        //Remover Dynamic Loader
+                        $("body").dynamicSpinnerDestroy({});
+                        model = myModel;
+                        model.verificaCURP = false; 
+                        alert("El CURP ya esta dado de alta en la empresa.");
+                        $("#CURP").focus(); 
+                    }
+                    else
+                    {
+                        //Remover Dynamic Loader
+                        $("body").dynamicSpinnerDestroy({});
+                        model = myModel;
+                        model.verificaCURP = false; 
+                        $("#nombre").focus(); 
+                    }
+                    
+                }
+            });
+        }
+    });
+
+    function checkSelect(field, rules, i, options){
+        if (field.val() == "0" || field.val() == "" || field.val() == undefined) {
+            // this allows the use of i18 for the error msgs
+            return options.allrules.validate2fields.alertText;
+        }
+    }
+
+</script>

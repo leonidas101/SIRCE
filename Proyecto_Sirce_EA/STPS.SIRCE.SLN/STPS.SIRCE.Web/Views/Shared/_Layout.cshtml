@@ -1,0 +1,172 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" href="~/Image/favicon.ico" type="favicon/ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewBag.Title - SIRCE</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/dynamics")
+    @RenderSection("scripts", required: false)
+
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                </button>
+                <h4 class="fix-sirce-logo pull-left header-tittle visible-lg visible-md">SIRCE</h4>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul id="main-nav" class="nav navbar-nav">
+                    <li role="presentation" style="visibility:hidden">
+                        <a onclick="TableroControlSelect()"><i class='fa fa-list-alt'></i><span>Tablero de Control</span></a>
+                    </li>
+                    <li role="presentation" style="visibility:hidden" class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <i class='fa fa-gear'></i>
+                            <span>Administración</span>
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a onclick="trabajadoresSelect()">Trabajadores</a></li>
+                            <li><a onclick="cursoSelect()">Cursos</a></li>
+                        </ul>
+                    </li>
+                    <li role="presentation" style="visibility:hidden">
+                        <a href="@Url.Action("Contact", "Home")"><i class='fa fa-bar-chart'></i><span>Reportes</span><b class="caret"></b></a>
+                    </li>
+                    <li role="presentation" style="visibility:hidden">
+                        <a href="@Url.Action("Contact", "Home")"><i class='fa fa-question'></i><span>Manuales & Ayuda</span><b class="caret"></b></a>
+                    </li>
+                    <li id="userList" role="presentation" class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <i class='fa fa-user '></i>
+                            <span>Christopher Ibarra <span id="userBadge" class="badge">1</span></span>
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="@Url.Action("Index", "Home")"><i class='fa fa-info-circle'></i> Información de Usuario</a>
+                            </li>
+                            <li id="liEmpresa" class="hidden">
+                                <a title="Cambiar Empresa Seleccionada" href="@Url.Action("Index", "Empresa")"></a>
+                            </li>
+                            <li id="liCentroTrabajo" class="hidden">
+                                <a title="Cambiar Centro de Trabajo Seleccinado" onclick="centroTrabajoSelect()"><i class='fa fa-reply'></i></a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                @*<a href="http://www.gob.mx/" target="_blank"><img class="visible-lg visible-md pull-right img-responsive mover-mex-header" src="~/Image/MoverMex.svg" /></a>*@
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+    <hr />
+    <footer>
+        <p>&copy; @DateTime.Now.Year - SIRCE</p>
+    </footer>
+</body>
+</html>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+    });
+
+    function enableMenu() {
+        $("#main-nav > li").each(function (key, value) {
+            $($(this)[0]).removeAttr("style");
+        });
+    }
+
+    function blockMenu() {
+        debugger;
+        $("#main-nav > li").each(function (key, value) {
+            $($(this)[0]).css("visibility", "hidden");
+        });
+        $("#userList").removeAttr("style");
+    }
+
+    function centroTrabajoSelect() {
+        blockMenu();
+        $.ajax({
+            url: '@Url.Action("Index", "CentroTrabajo")',
+            type: 'POST',
+            data: null,
+            beforeSend: function () {
+                $("body").dynamicSpinner({
+                    loadingText: "Cargando Centros de Trabajo..."
+                });
+            },
+            success: function (result) {
+                //Remover Dynamic Loader
+                $("body").dynamicSpinnerDestroy({});
+                $("#userBadge").text('2');
+                $("#liCentroTrabajo").addClass("hidden");
+                $(".body-content").html(result);
+            }
+        });
+    }
+
+    function trabajadoresSelect() {
+        $.ajax({
+            url: '@Url.Action("Index", "Trabajador")',
+            type: 'POST',
+            data: null,
+            beforeSend: function () {
+                $("body").dynamicSpinner({
+                    loadingText: "Cargando Trabajadores..."
+                });
+            },
+            success: function (result) {
+                //Remover Dynamic Loader
+                $("body").dynamicSpinnerDestroy({});
+                $(".body-content").html(result);
+            }
+        });
+    }
+
+    function cursoSelect() {
+        $.ajax({
+            url: '@Url.Action("Index", "Curso")',
+            type: 'POST',
+            data: null,
+            beforeSend: function () {
+                $("body").dynamicSpinner({
+                    loadingText: "Cargando Cursos..."
+                });
+            },
+            success: function (result) {
+                //Remover Dynamic Loader
+                $("body").dynamicSpinnerDestroy({});
+                $(".body-content").html(result);
+            }
+        });
+    }
+
+    function TableroControlSelect() {
+        $.ajax({
+            url: '@Url.Action("Index", "TableroControl")',
+            type: 'POST',
+            data: {rawModel: JSON.stringify(model)},
+            beforeSend: function() {
+                $("body").dynamicSpinner({
+                    loadingText: "Cargando Listas..."
+                });
+            },
+            success: function (result) {
+                //Remover Dynamic Loader
+                $("body").dynamicSpinnerDestroy({});
+                $(".body-content").html(result);
+            }
+        });
+    }
+</script>

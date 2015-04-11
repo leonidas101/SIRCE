@@ -1,0 +1,352 @@
+﻿@model STPS.SIRCE.Web.Models.EstablecimientoModel
+
+@{
+    ViewBag.Title = "Datos";
+    Layout = null;
+}
+<div class="modal-body">
+    <form id="formEstablecimiento">
+        <div class="col-lg-12 form-group">
+            <div class="col-lg-4 form-group">
+                <label for="nombreLista">Nombre de la Lista:</label>
+                <label id="nombreLista"></label>
+            </div>
+            <div class="col-lg-4 form-group">
+                <label for="fechaPresentacion">Fecha de Presentacion:</label>
+                <label id="fechaPresentacion"></label>
+            </div>
+            <div class="col-lg-4 form-group">
+                <label for="numeroConstancias">Número de Constancias:</label>
+                <label id="numeroConstancias"></label>
+            </div>
+        </div>
+        <div class="col-lg-12"></div>
+        <div class="col-lg-12 line-separator"></div>
+        <div class="col-lg-12">&nbsp;</div>
+        <fieldset>            
+            <legend>Campos obligatorios para incorporar un establecimiento:</legend>
+            <div class="col-lg-12 form-group">
+                <div class="col-lg-6"><div id="botonesTrabajador" class="btn-group" role="group"> <button type="button" class="btn btn-info icon-grid" onclick="trabajadoresClick($(this))" data-toggle="tooltip" data-placement="bottom" title="" accion="2" defaultenabled="true" data-original-title="Agregar un Trabajador"><i class="fa fa-plus"></i></button> <button type="button" class="btn btn-info icon-grid" onclick="accionarClick($(this))" disabled="" data-toggle="tooltip" data-placement="bottom" title="" accion="1" defaultenabled="false" data-original-title="Consultar un Trabajador"><i class="fa fa-search"></i></button> <button type="button" class="btn btn-info icon-grid" onclick="accionarClick($(this))" disabled="" data-toggle="tooltip" data-placement="bottom" title="" accion="3" defaultenabled="false" data-original-title="Editar un Trabajador"><i class="fa fa-pencil"></i></button> <button type="button" class="btn btn-info icon-grid" onclick="accionarClick($(this))" disabled="" data-toggle="tooltip" data-placement="bottom" title="" accion="4" defaultenabled="false" data-original-title="Eliminar un Trabajador"><i class="fa fa-remove"></i></button></div></div>
+                <div class="col-lg-6"><div id="botonesCursos" style="visibility:hidden" class="btn-group" role="group"> <button type="button" class="btn btn-info icon-grid" onclick="cursosClick($(this))" data-toggle="tooltip" data-placement="bottom" title="" accion="2" defaultenabled="true" data-original-title="Agregar un Trabajador"><i class="fa fa-plus"></i></button> <button type="button" class="btn btn-info icon-grid" onclick="accionarClick($(this))" disabled="" data-toggle="tooltip" data-placement="bottom" title="" accion="1" defaultenabled="false" data-original-title="Consultar un Trabajador"><i class="fa fa-search"></i></button> <button type="button" class="btn btn-info icon-grid" onclick="accionarClick($(this))" disabled="" data-toggle="tooltip" data-placement="bottom" title="" accion="3" defaultenabled="false" data-original-title="Editar un Trabajador"><i class="fa fa-pencil"></i></button> <button type="button" class="btn btn-info icon-grid" onclick="accionarClick($(this))" disabled="" data-toggle="tooltip" data-placement="bottom" title="" accion="4" defaultenabled="false" data-original-title="Eliminar un Trabajador"><i class="fa fa-remove"></i></button></div></div>
+            </div>
+            <div class="col-lg-12 form-group">
+                <div class="col-lg-6 form-group">
+                    <label for="trabajadores">*Trabajador:</label>
+                    <select data-placeholder="-Seleccionar Trabajador-" class="form-control" id="trabajadores" />
+                </div>
+                <div class="col-lg-6 form-group">
+                    <label for="cursos">*Curso:</label>
+                    <select data-placeholder="-Seleccionar Curso-" class="form-control" id="cursos" />
+                </div>
+            </div>
+            <div class="col-lg-12 form-group">
+                <div class="col-lg-10"> <button id="btnAgregar" type="button" class="btn btn-primary pull-right">Agregar</button></div>
+                <div class="col-lg-2"></div>
+            </div>            
+        </fieldset>
+        <fieldset>            
+            <div class="col-lg-12 form-group">
+                <div class="col-lg-12 form-group">
+                    <div class="col-lg-12 fix-Grid" id="gridEstablecimientosHtml"></div>
+                </div>
+            </div>
+            <div class="col-lg-12 line-separator"></div>
+        </fieldset>
+    </form>
+</div>
+<div class="modal-footer">
+    @* Seccion de Botones*@
+    <div class="col-lg-12 fixOptionBtn">
+        <div class="col-lg-10"><button id="btnRegresar" type="button" class="btn btn-primary pull-right">Regresar</button></div>
+        <div class="col-lg-2"><button id="btnGuardar" type="button" class="btn btn-primary pull-right">Guardar</button></div>
+        <div class="col-lg-1"></div>
+    </div>
+</div>
+<script type="text/javascript">
+    //Modelo en Cache para llamadas posteriores a Servidor.
+    var model = @Html.Raw(Json.Encode(Model));
+
+    $(document).ready(function () {
+        debugger;
+        $("#nombreLista").text(model.lista.nombreLista);
+        $("#fechaPresentacion").text(model.lista.fechaPresentacion);
+        $("#numeroConstancias").text(model.lista.numeroConstancias );
+
+        $("#trabajadores").dynamicDropDown({
+            data: model.listaTrabajadores
+        });
+
+        $("#cursos").dynamicDropDown({
+            data: model.listaCursos
+        });
+
+        $("#gridEstablecimientosHtml").dynamicTable({
+            data: model.gridEstablecimientos
+        });
+
+        $("#btnAgregar").click(function(){
+            if ($('#trabajadores option:selected').val() == 0 || $('#trabajadores option:selected').val() == undefined) {
+                var md = $.Zebra_Dialog("¡Seleccione un trabajador!"
+                            ,{
+                                'type':     'information',
+                                'title':    'Confirmar Datos',
+                                'buttons':  [{caption: 'Cerrar', callback: function() { md.close();  }}
+                                ]
+                            });
+                $('#trabajadores').focus();
+                return false;
+            }
+
+            if ($('#cursos option:selected').val() == 0 || $('#cursos option:selected').val() == undefined) {
+                var md = $.Zebra_Dialog("¡Seleccione un curso!"
+                            ,{
+                                'type':     'information',
+                                'title':    'Confirmar Datos',
+                                'buttons':  [{caption: 'Cerrar', callback: function() { md.close();  }}
+                                ]
+                            });
+                $('#cursos').focus();
+                return false;
+            }
+
+            debugger;
+            //Obtengo los datos a validar, TrabajadorID y CentroTrabajoSIRCEID y 
+            var elementos = String($('#trabajadores option:selected').val()).split("|");
+            if (model.gridEstablecimientos.datos !=  null)
+            {
+                //Valido que no exista el registro.
+                var selected = jQuery.grep(model.gridEstablecimientos.datos, function(obj) { 
+                    return (obj.trabajadorID == elementos[0] && obj.cursoID  == $('#cursos').val() && obj.CentroTrabajoSIRCEID == elementos[1]); 
+                });
+
+                if (selected.length > 0)
+                {
+                    var md = $.Zebra_Dialog("¡Ya existe este curso para este trabajador y en este establecimiento!"
+                                ,{
+                                    'type':     'warning',
+                                    'title':    'Confirmar Datos',
+                                    'buttons':  [{caption: 'Cerrar', callback: function() { md.close();  }}
+                                    ]
+                                });
+                    return;
+                }
+            }
+
+            var establecimientoTemporal = new Datos();
+
+            //Se construye el registro al modelo.gridNormasEspecialidades
+            establecimientoTemporal.datos.ConstanciaID = $('#trabajadores option:selected').val() + "|" + elementos[1] + "|" + $('#cursos :selected').val(); //TrabajadorID|CentroTrabajoSIRCEID|CursoID
+            establecimientoTemporal.datos.trabajadorID = elementos[0];
+            establecimientoTemporal.datos.TrabajadorDescripcion = $('#trabajadores :selected').text();
+            establecimientoTemporal.datos.cursoID = $('#cursos').val();
+            establecimientoTemporal.datos.CursoDescripcion =  $('#cursos :selected').text();
+            establecimientoTemporal.datos.CentroTrabajoSIRCEID = elementos[1];
+            establecimientoTemporal.datos.Eliminado = false;
+
+            debugger;
+            //Se agrega item al modelo
+            model.gridEstablecimientos.datos.push(establecimientoTemporal.datos);
+
+            var selected = jQuery.grep(model.gridEstablecimientos.datos, function(obj) { 
+                return (obj.Eliminado == false); 
+            });
+
+            model.gridEstablecimientos.datos = selected;
+
+            //el nombre del control debe ser diferente al nombre del grid del modelo
+            $("#gridEstablecimientosHtml").dynamicTable({
+                data: model.gridEstablecimientos
+            });
+
+            $('#trabajadores option:selected').prop('selected', false);
+            $('#trabajadores option[value=-0]').prop('selected', true);
+            $("#trabajadores").trigger("chosen:updated");
+
+            $('#cursos option:selected').prop('selected', false);
+            $('#cursos option[value=-0]').prop('selected', true);
+            $("#cursos").trigger("chosen:updated");
+
+            console.log(model);
+        });
+
+        $("#btnGuardar").click(function(){
+            if($("#formEstablecimiento").validationEngine('validate',{promptPosition : "bottomRight"})){
+                $.ajax({
+                    url: '@Url.Action("CrearEstablecimiento")',
+                    type: 'POST',
+                    data: {rawModel: JSON.stringify(model)},
+                    beforeSend: function() {
+                        $("body").dynamicSpinner({
+                            loadingText: "Guardando..."
+                        });
+                    },
+                    success: function (result) {
+                        //Remover Dynamic Loader
+                        $("body").dynamicSpinnerDestroy({});
+                        $("#gridEstablecimientosHtml .panel-body").html(result);
+                        $(".modal").modal('hide');
+                        $("body").removeClass('modal-open');
+                        consultarListas();
+                    }
+                });
+            }
+        });
+
+        $("#btnTrabajador").click(function(){
+            $(".modal").modal('hide');
+            $("body").removeClass('modal-open');
+            consultarListas();
+        });
+
+        $("#btnCurso").click(function(){
+            $.ajax({
+                url: '@Url.Action("CrearEstablecimiento")',
+                type: 'POST',
+                data: {rawModel: JSON.stringify(model)},
+                beforeSend: function() {
+                    $("body").dynamicSpinner({
+                        loadingText: "Guardando..."
+                    });
+                },
+                success: function (result) {
+                    //Remover Dynamic Loader
+                    $("body").dynamicSpinnerDestroy({});
+                    $("#gridEstablecimientosHtml .panel-body").html(result);
+                    $(".modal").modal('hide');
+                    $("body").removeClass('modal-open');
+                    consultarListas();
+                }
+            });
+        });
+
+        $("#btnRegresar").click(function(){
+            $.ajax({
+                url: '@Url.Action("CrearEstablecimiento")',
+                type: 'POST',
+                data: {rawModel: JSON.stringify(model)},
+                beforeSend: function() {
+                    $("body").dynamicSpinner({
+                        loadingText: "Guardando..."
+                    });
+                },
+                success: function (result) {
+                    //Remover Dynamic Loader
+                    $("body").dynamicSpinnerDestroy({});
+                    $("#gridEstablecimientosHtml .panel-body").html(result);
+                    $(".modal").modal('hide');
+                    $("body").removeClass('modal-open');
+                    consultarListas();
+                }
+            });
+        });
+    });
+
+    // Función para ejecutar una acción desde el grid.
+    function accionarClick(Accion){
+        debugger;
+        model.Accion = $(Accion).attr('Accion');
+        limpiarModelo();
+
+        if ($(".active").attr("value") == "0" || $(".active").attr("value") == undefined)
+        {
+            var md = $.Zebra_Dialog("¡Seleccione un registro valido para realizar esta acción!"
+                               ,{
+                                   'type':     'warning',
+                                   'title':    'Aviso Datos',
+                                   'buttons':  [{caption: 'Cerrar', callback: function() { md.close();  }}
+                                   ]
+                               });
+            return true;
+        }
+        var item = $(".active").attr("value"); //Elemento a buscar en el Grid y en la tabla [TrabajadorID|CentroTrabajoSIRCEID|CursoID]
+
+        if(model.Accion == $.grep(model.acciones, function(obj) { return obj.catalogoDescripcion == 'Eliminar'})[0].catalogoID)
+        {
+            var md = $.Zebra_Dialog("¿Esta seguro de eliminar el registro?"
+            ,{
+                'type':     'warning',
+                'title':    'Confirmar Datos',
+                'buttons':  [{caption: 'Sí', callback: function() { EliminarEstablecimiento(item);  }},
+                             {caption: 'No', callback: function() { md.close();  }}
+                ]
+            });
+        }
+        console.log(model);
+    }
+
+    function GridEstablecimientos()
+    {
+        this.gridEstablecimientos = {
+            datos: []
+        }
+    }
+
+    function Datos()
+    {
+        this.datos = {
+            ConstanciaID : "",
+            trabajadorID : 0,
+            TrabajadorDescripcion : "",
+            cursoID : 0,
+            CursoDescripcion : "",
+            Eliminado : false,
+            CentroTrabajoSIRCEID : 0
+        }
+    }
+
+    function limpiarModelo()
+    {
+        model.establecimiento = null;
+        //model.gridEstablecimientos = null;
+        model.listaEstablecimientos = null;
+    }
+
+    function EliminarEstablecimiento(item){
+        var establecimientos = new GridEstablecimientos();
+
+        debugger;
+        $(model.gridEstablecimientos.datos).each(function (key, value) {
+            //Es un registro que ya existe en la BD, se debe de actualizar su estatus.
+            var establecimientosTemporal = new Datos();
+
+            //Se construye el registro al modelo.GridEstablecimientos
+            establecimientosTemporal.datos.ConstanciaID = value.ConstanciaID;
+            establecimientosTemporal.datos.trabajadorID = value.trabajadorID;
+            establecimientosTemporal.datos.TrabajadorDescripcion = value.TrabajadorDescripcion;
+            establecimientosTemporal.datos.cursoID = value.cursoID;
+            establecimientosTemporal.datos.CursoDescripcion =  value.CursoDescripcion;
+            establecimientosTemporal.datos.Eliminado = false;
+            establecimientosTemporal.datos.CentroTrabajoSIRCEID = value.CentroTrabajoSIRCEID;
+            if (value.ConstanciaID == item)
+            {
+                establecimientosTemporal.datos.Eliminado = true;
+            }
+            //Almaceno los registros temporalmente.
+            establecimientos.gridEstablecimientos.datos.push(establecimientosTemporal.datos);
+        });
+
+        var selected = jQuery.grep(establecimientos.gridEstablecimientos.datos, function(obj) { 
+            return obj.Eliminado == false; 
+        });
+
+        //Debo de asignar los valores en el objecto model.gridEstablecimientos.datos
+        model.gridEstablecimientos.datos = selected;
+
+        //el nombre del control debe ser diferente al nombre del grid del modelo
+        $("#gridEstablecimientosHtml").dynamicTable({
+            data: model.gridEstablecimientos
+        });
+
+        $('#trabajadores option:selected').prop('selected', false);
+        $('#trabajadores option[value=-0]').prop('selected', true);
+        $("#trabajadores").trigger("chosen:updated");
+
+        $('#cursos option:selected').prop('selected', false);
+        $('#cursos option[value=-0]').prop('selected', true);
+        $("#cursos").trigger("chosen:updated");
+
+        console.log(model); 
+    }
+
+</script>
+

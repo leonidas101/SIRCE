@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "Empresas";
+}
+
+<div id="contenido" class="col-lg-12">
+    <div id="filtrosEmpresas" titulo="Filtros de busqueda para Empresas:" icono="filter" class="col-lg-12"></div>
+    <div id="gridEmpresas" titulo="Resultados de busqueda para Empresas:" icono="table" class="col-lg-12"></div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $($("#contenido").children("div")).dynamicPanels({});
+        $.ajax({
+            url: '@Url.Action("ConsultarVistaFiltros")',
+            type: 'GET',
+            data: null,
+            success: function (result) {
+                $("#filtrosEmpresas .panel-body").html(result);
+            }
+        });
+
+    });
+</script>

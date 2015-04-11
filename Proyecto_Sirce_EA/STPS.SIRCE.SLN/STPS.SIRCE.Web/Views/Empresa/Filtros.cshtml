@@ -1,0 +1,122 @@
+﻿@model STPS.SIRCE.Web.Models.EmpresaModel
+@{
+    ViewBag.Title = "Filtros Empresas";
+    Layout = null;
+}
+
+<form id="filtrosBusqueda">
+    <div class="col-lg-12 form-group">
+        <div class="col-lg-12 form-group"><label class="pull-left text-info">Seleccionar al menos 1 de los 3 campos obligatorios (*)</label></div>
+        @* Primer Renglon de Filtros *@
+        <div class="col-lg-4 form-group">
+            <label for="rfc">RFC*:</label>
+            <input type="text" class="validate[groupRequired[empresa] minSize[3]] form-control" id="rfc" placeholder="RFC" maxlength="13" />
+        </div>
+
+        <div class="col-lg-4 form-group">
+            <label for="IMSS">Registro patronal del IMSS*:</label>
+            <input type="text" class=" validate[groupRequired[empresa] minSize[3]] form-control" id="IMSS" placeholder="Registro patronal del IMSS" maxlength="11" />
+        </div>
+
+        <div class="col-lg-4 form-group">
+            <label for="RazonSocial">Nombre o razon Social*:</label>
+            <textarea type="text" class="validate[groupRequired[empresa] minSize[3]] form-control" id="RazonSocial" placeholder="Nombre o razon Social" maxlength="255" />
+        </div>
+
+        @* Segundo Renglon de Filtros *@
+        <div class="col-lg-4 form-group">
+            <label for="Calle">Calle y Número:</label>
+            <textarea type="text" class="form-control" id="Calle" placeholder="Calle y Número:" maxlength="255" />
+        </div>
+
+        <div class="col-lg-4 form-group">
+            <label for="Entidad">Entidad Federativa:</label>
+            <select data-placeholder="-Seleccionar Entidad-" class="form-control" id="Entidad" />
+        </div>
+
+
+        <div id="formMunicipios" class="col-lg-4 form-group">
+            <label for="Municipio">Delegacion/Municipio:</label>
+            <select data-placeholder="-Seleccionar Delegacion/Municipio-" class="form-control" id="Municipio" />
+        </div>
+    </div>
+
+    @* Seccion de Botones*@
+    <div class="col-lg-12 fixOptionBtn">
+        <div class="col-lg-11"><button id="ConsultarEmpresas" type="button" class="btn btn-primary pull-right">Buscar Empresas</button></div>
+        <div class="col-lg-1"></div>
+    </div>
+</form>
+
+<script type="text/javascript">
+    //Modelo en Cache para llamadas posteriores a Servidor.
+    var model = @Html.Raw(Json.Encode(Model));
+    $(document).ready(function () {
+
+        //Se Carga Dynamic DropDown Para Entidades
+        $("#Entidad").dynamicDropDown({
+            data: model.entidades
+        });
+
+        //Fix Temporal Dynamic DropDown
+        $("#filtrosEmpresas .panel-body").height(($(".body-content").height()) * (1.2));
+        //Wipe Entidades
+        model.entidades = null;
+        //Se habilita evento para cargar Municipios al Seleccionar una Entidad
+        $("#Entidad").chosen().change(function (event) {
+            if($("#Municipio_chosen").length)
+            $("#Municipio").dynamicDropDownDestroy({});
+            if ($("#Entidad").val() != 0) {
+                model.entidadID = $("#Entidad").val();
+                $.ajax({
+                    url: '@Url.Action("ConsultarMunicipios")',
+                    type: 'POST',
+                    data: {rawModel: JSON.stringify(model)},
+                    //Mostrar Dynamic Loader
+                    beforeSend: function() {
+                        $("body").dynamicSpinner({
+                            loadingText: "Cargando Municipios"
+                        });
+                    },
+                    success: function (myModel) {
+                        //Remover Dynamic Loader
+                        $("body").dynamicSpinnerDestroy({});
+                        model = myModel;
+                        $("#Municipio").dynamicDropDown({
+                            data: model.municipios
+                        });
+                    }
+                });
+            }
+        });
+
+        $("#ConsultarEmpresas").click(function(){
+            if($("#filtrosBusqueda").validationEngine('validate',{promptPosition : "bottomRight"})){
+                model.rfc = ($.trim($("#rfc").val())!='') ? $("#rfc").val() : null;
+                model.registroIMSS = ($.trim($("#IMSS").val())!='') ? $("#IMSS").val() : null;
+                model.nombreRazonSocial = ($.trim($("#RazonSocial").val())!='') ? $("#RazonSocial").val() : null;
+                model.calleNumero = ($.trim($("#Calle").val())!='') ? $("#Calle").val() : null;
+                model.entidadID =($("#Entidad").val() != 0) ? $("#Entidad").val()  : null;
+                model.municipioID = (($("#Entidad").val() != 0) && ($("#Municipio").val() != 0)) ? $("#Municipio").val()  : null;
+                //Wipe Municipios
+                model.municipios = null;
+                $.ajax({
+                    url: '@Url.Action("ConsultarVistaGrid")',
+                    type: 'POST',
+                    data: {rawModel: JSON.stringify(model)},
+                    beforeSend: function() {
+                        $("body").dynamicSpinner({
+                            loadingText: "Cargando Empresas"
+                        });
+                    },
+                    success: function (result) {
+                        //Remover Dynamic Loader
+                        $("body").dynamicSpinnerDestroy({});
+                        $("#gridEmpresas .panel-body").html(result);
+                        $("#gridEmpresasTitulo a").click();
+                    }
+                });
+            }
+        });
+    });
+</script>

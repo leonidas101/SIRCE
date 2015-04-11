@@ -1,0 +1,140 @@
+﻿/**
+* dynamics.css v1.0.0 by @cibarra
+* Copyright 2015 Code Retailers.
+* http://www.apache.org/licenses/LICENSE-2.0
+*/
+
+
+/*#region Dynamics Spinner Styles */
+/*  ╔╦╗┬ ┬┌┐┌┌─┐┌┬┐┬┌─┐┌─┐  ╔═╗┌─┐┬┌┐┌┌┐┌┌─┐┬─┐ */
+/*   ║║└┬┘│││├─┤│││││  └─┐  ╚═╗├─┘│││││││├┤ ├┬┘ */
+/*  ═╩╝ ┴ ┘└┘┴ ┴┴ ┴┴└─┘└─┘  ╚═╝┴  ┴┘└┘┘└┘└─┘┴└─ */
+
+.blockDiv {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  background-color: #ecf0f1;
+  width: 0px;
+  height: 0px;
+  z-index: 5000;
+}
+
+.spinner{
+    position:fixed;
+    z-index: 5001;
+}
+
+.spinner h2 {
+    margin-left: -35%;
+    margin-top: 15%;
+}
+
+.stop-scrolling {
+  height: 100%;
+  overflow: hidden;
+}
+
+/*#endregion Dynamics Spinner Styles */
+
+
+.panel-body {
+   overflow: auto;
+}
+
+/*#region Dynamic Table*/
+thead{
+    position: relative;
+    padding: 1px 15px;
+    background-image: -webkit-gradient(linear, left 0%, left 100%, from(#4A4A4A), to(#2B2B2B));
+    background-image: -webkit-linear-gradient(top, #4A4A4A, 0%, #2B2B2B, 100%);
+    background-image: -moz-linear-gradient(top, #4A4A4A 0%, #2B2B2B 100%);
+    background-image: linear-gradient(to bottom, #4A4A4A 0%, #2B2B2B 100%);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4A4A4A', endColorstr='#2B2B2B', GradientType=0);
+    color: white;
+    font-weight: bold;
+}
+
+tbody tr{
+    cursor:pointer;
+    font-size:11px;
+}
+
+.active td {
+    position: relative;
+    padding: 1px 15px;
+    background-image: -webkit-gradient(linear, left 0%, left 100%, from(#DBDDDE), to(#898C90));
+    background-image: -webkit-linear-gradient(top, #DBDDDE, 0%, #898C90, 100%);
+    background-image: -moz-linear-gradient(top, #DBDDDE 0%, #898C90 100%);
+    background-image: linear-gradient(to bottom, #DBDDDE 0%, #898C90 100%);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#DBDDDE', endColorstr='#898C90', GradientType=0);
+    font-weight: bold;
+}
+
+.icon-grid{
+    font-size:20px;
+    color: #ffffff;
+    background-image: -webkit-gradient(linear, left 0%, left 100%, from(#DBDDDE), to(#898C90));
+    background-image: -webkit-linear-gradient(top, #DBDDDE, 0%, #898C90, 100%);
+    background-image: -moz-linear-gradient(top, #DBDDDE 0%, #898C90 100%);
+    background-image: linear-gradient(to bottom, #DBDDDE 0%, #898C90 100%);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#DBDDDE', endColorstr='#898C90', GradientType=0);
+    font-weight: bold;
+}
+
+/*#endregion*/
+
+/*
+    #region Dynamic Calendar
+*/
+@media (min-width:1080px) {
+    .ui-datepicker-trigger{
+        position: absolute;
+        width: 34px;
+        height: 36px;
+        margin-top: -6%;
+        margin-left: 47%;
+    }
+}
+@media (min-width:768px) {
+    .ui-datepicker-trigger{
+        position: absolute;
+        width: 34px;
+        height: 36px;
+        margin-top: -9%;
+        margin-left: 69%;
+    }
+}
+/*#endregion*/
+
+
+/*#region Dynamics Modal Styles */
+/*  ╔╦╗┬ ┬┌┐┌┌─┐┌┬┐┬┌─┐┌─┐  ╔╦╗┌─┐┌┬┐┌─┐┬  
+/*   ║║└┬┘│││├─┤│││││  └─┐  ║║║│ │ ││├─┤│  
+/*  ═╩╝ ┴ ┘└┘┴ ┴┴ ┴┴└─┘└─┘  ╩ ╩└─┘─┴┘┴ ┴┴─┘
+*/
+.modal-header {
+    color: #ffffff !important;
+    text-decoration: none;
+    background-color: #1f3852;
+    background-image: -moz-linear-gradient(top, #494744, #615D59);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#494744), to(#615D59));
+    background-image: -webkit-linear-gradient(top, #494744, #615D59);
+    background-image: -o-linear-gradient(top, #494744, #615D59);
+    background-image: linear-gradient(to bottom, #494744, #615D59);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff24415f', endColorstr='#ff172b3e', GradientType=0);
+    border: 1px solid #080f15;
+    -webkit-box-shadow: inset 0 1px 0 #B0ABA5;
+    -moz-box-shadow: inset 0 1px 0 #B0ABA5;
+    box-shadow: inset 0 1px 0 #B0ABA5;
+    text-align:center;
+}
+
+.modal-content {
+    border: 5px solid !important;
+}
+/*#endregion*/

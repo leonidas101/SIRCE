@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="17be8e0121984007a314f4da34743428" Name="Diagram1" ZoomLevel="71">
+        <EntityTypeShape EntityType="SIRCEModel.Acciones" Width="1.5" PointX="5.75" PointY="1.25" />
+        <EntityTypeShape EntityType="SIRCEModel.Acuses" Width="1.5" PointX="5.25" PointY="21" />
+        <EntityTypeShape EntityType="SIRCEModel.AreasTematicas" Width="1.5" PointX="3" PointY="27" />
+        <EntityTypeShape EntityType="SIRCEModel.CentrosTrabajoSIRCE" Width="1.5" PointX="0.75" PointY="9.5" />
+        <EntityTypeShape EntityType="SIRCEModel.ConsecutivosUR" Width="1.5" PointX="7.75" PointY="1.25" />
+        <EntityTypeShape EntityType="SIRCEModel.Constancias" Width="1.5" PointX="7.5" PointY="12.875" />
+        <EntityTypeShape EntityType="SIRCEModel.Cursos" Width="1.5" PointX="5.25" PointY="27.125" />
+        <EntityTypeShape EntityType="SIRCEModel.DocumentosProbatorios" Width="1.5" PointX="0.75" PointY="6.375" />
+        <EntityTypeShape EntityType="SIRCEModel.EmpresaCentrosTrabajoSIRCE" Width="1.5" PointX="6" PointY="9.625" />
+        <EntityTypeShape EntityType="SIRCEModel.EmpresasSIRCE" Width="1.5" PointX="3.75" PointY="3.625" />
+        <EntityTypeShape EntityType="SIRCEModel.Escolaridades" Width="1.5" PointX="0.75" PointY="15.25" />
+        <EntityTypeShape EntityType="SIRCEModel.ListaCentrosTrabajo" Width="1.5" PointX="5.25" PointY="16" />
+        <EntityTypeShape EntityType="SIRCEModel.Listas" Width="1.5" PointX="3" PointY="19.875" />
+        <EntityTypeShape EntityType="SIRCEModel.NormasCompetencia" Width="1.5" PointX="3" PointY="0.75" />
+        <EntityTypeShape EntityType="SIRCEModel.NormaTrabajador" Width="1.5" PointX="5.25" PointY="6.5" />
+        <EntityTypeShape EntityType="SIRCEModel.ObjetivosCapacitacion" Width="1.5" PointX="3" PointY="29.625" />
+        <EntityTypeShape EntityType="SIRCEModel.Ocupaciones" Width="1.5" PointX="0.75" PointY="12.75" />
+        <EntityTypeShape EntityType="SIRCEModel.Trabajadores" Width="1.5" PointX="3" PointY="8" />
+        <AssociationConnector Association="SIRCEModel.FK_Acuses_Listas" />
+        <AssociationConnector Association="SIRCEModel.FK_Cursos_AreasTematicas" />
+        <AssociationConnector Association="SIRCEModel.FK_EmpresaCentrosTrabajoSIRCE_CentrosTrabajoSIRCE" />
+        <AssociationConnector Association="SIRCEModel.FK_ListaCentrosTrabajo_CentrosTrabajoSIRCE" />
+        <AssociationConnector Association="SIRCEModel.FK_Listas_CentrosTrabajoSIRCE" />
+        <AssociationConnector Association="SIRCEModel.FK_Trabajadores_CentrosTrabajoSIRCE" />
+        <AssociationConnector Association="SIRCEModel.FK_Constancias_Cursos" />
+        <AssociationConnector Association="SIRCEModel.FK_Constancias_ListaCentrosTrabajo" />
+        <AssociationConnector Association="SIRCEModel.FK_Constancias_Trabajadores" />
+        <AssociationConnector Association="SIRCEModel.FK_Cursos_EmpresasSIRCE" />
+        <AssociationConnector Association="SIRCEModel.FK_Cursos_ObjetivosCapacitacion" />
+        <AssociationConnector Association="SIRCEModel.FK_Trabajadores_ComprobantesEstudio" />
+        <AssociationConnector Association="SIRCEModel.FK_EmpresaCentrosTrabajoSIRCE_EmpresasSIRCE" />
+        <AssociationConnector Association="SIRCEModel.FK_Trabajadores_Escolaridades" />
+        <AssociationConnector Association="SIRCEModel.FK_ListaCentrosTrabajo_Listas" />
+        <AssociationConnector Association="SIRCEModel.FK_NormaTrabajador_NormasCompetencia" />
+        <AssociationConnector Association="SIRCEModel.FK_NormaTrabajador_Trabajadores" />
+        <AssociationConnector Association="SIRCEModel.FK_Trabajadores_Ocupaciones" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
